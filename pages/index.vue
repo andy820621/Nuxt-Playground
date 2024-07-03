@@ -1,0 +1,16 @@
+<template>
+	<div class="text-red">Hello World {{ x }} {{ y }}</div>
+
+	<button @click="toggleDark">{{ color.value }}</button>
+</template>
+
+<script setup lang="ts">
+const { x, y } = useMouse();
+const color = useColorMode();
+
+function toggleDark() {
+	color.value = color.value === "dark" ? "light" : "dark";
+}
+</script>
+
+<style scoped></style>
