@@ -1,15 +1,15 @@
-<template>
-	<NuxtLaout>
-		<NuxtPage />
-	</NuxtLaout>
-</template>
-
 <script setup>
-import "@unocss/reset/tailwind.css";
+import '@unocss/reset/tailwind.css'
 </script>
+
+<template>
+  <NuxtLaout>
+    <NuxtPage />
+  </NuxtLaout>
+</template>
 
 <style>
 .dark {
-	color-scheme: dark;
+  color-scheme: dark;
 }
 </style>
