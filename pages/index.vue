@@ -8,13 +8,21 @@ function toggleDark() {
 </script>
 
 <template>
-  <div class="text-red">
-    Hello World {{ x }} {{ y }}
-  </div>
+  <div class="grid grid-cols-[1fr_2fr] h-full">
+    <div class="p4 border-r border-base">
+      Content
+      <div class="text-red">
+        Hello World {{ x }} {{ y }}
+      </div>
+      <button @click="toggleDark">
+        {{ color.value }}
+      </button>
+    </div>
 
-  <button @click="toggleDark">
-    {{ color.value }}
-  </button>
+    <div class="p4">
+      Playground
+    </div>
+  </div>
 </template>
 
 <style scoped></style>
