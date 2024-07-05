@@ -9,7 +9,6 @@ const error = shallowRef<{message: string;}>()
 const stream = ref<ReadableStream>()
 
 async function startDevServer() {
-  // @ts-ignore
   const rawFiles = import.meta.glob('../templates/basic/*.*', {
     query: '?raw',
     import: 'default',
@@ -77,7 +76,6 @@ onMounted(startDevServer)
 
     <TerminalOutput :stream="stream" />
   </div>
-
 </template>
 
 <style scoped>
