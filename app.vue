@@ -8,7 +8,7 @@ import '@unocss/reset/tailwind.css'
   </NuxtLayout>
 </template>
 
-<style>
+<style >
 .dark {
   color-scheme: dark;
 }
@@ -16,5 +16,6 @@ import '@unocss/reset/tailwind.css'
 html, body {
   height: 100vh;
   overflow: hidden;
+  --uno: bg-base font-sans;
 }
 </style>

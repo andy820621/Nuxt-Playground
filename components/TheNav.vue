@@ -3,10 +3,11 @@
 </script>
 
 <template>
-  <nav px6 py4 text-lg border="b base" flex="~ gap-2 items-center">
-    <div i-logos-nuxt-icon text-3xl />
-
-    <span text-xl>Learn.nuxt</span>
+  <nav px6 py3 text-lg border="b base" flex="~ gap-2 items-center">
+    <NuxtLink to="/" flex items-center gap-2 title="Nuxt Playground">
+      <NuxtLogo class="h-1.3em mt--1.9"  />
+      <span text-xl font-bold>Playground</span>
+    </NuxtLink>
 
     <div flex-auto />
 
