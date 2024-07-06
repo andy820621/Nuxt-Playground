@@ -10,6 +10,7 @@
 
     <div flex-auto />
 
+    <ColorSchemeToggle />
     <NuxtLink
       p1 rounded
       duration-200
