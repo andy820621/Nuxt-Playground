@@ -1,39 +1,44 @@
 <template>
-  <div ref="root">
-
-  </div>
+  <div ref="root"></div>
 </template>
 
 <script setup lang="ts">
+import '@xterm/xterm/css/xterm.css'
 import { Terminal } from '@xterm/xterm'
+import { FitAddon } from '@xterm/addon-fit';
 
-const props =defineProps<{
+const props = defineProps<{
   stream?: ReadableStream
 }>()
 
 const root = ref<HTMLDivElement>()
-const terminal = new Terminal();
+const terminal = new Terminal()
+const fitAddon = new FitAddon()
 
-watch(() => props.stream, (newS) => {
-  if (!newS) return
-  const reader = newS.getReader()
+terminal.loadAddon(fitAddon)
 
-  function read() {
+watch(
+  () => props.stream,
+  (newS) => {
+    if (!newS) return
+    const reader = newS.getReader()
+
+    function read() {
       reader.read().then(({ done, value }) => {
-        terminal.write(value)
-        if (!done)
-          read()
+        if (value) terminal.write(value)
+        if (!done) read()
       })
     }
 
-  read()
-}, { flush: 'sync', immediate: true })
+    read()
+  },
+  { flush: 'sync', immediate: true }
+)
 
 onMounted(() => {
   terminal.open(root.value!)
+  fitAddon.fit()
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

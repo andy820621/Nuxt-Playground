@@ -74,7 +74,7 @@ onMounted(startDevServer)
     </div>
     
 
-    <TerminalOutput :stream="stream" />
+    <TerminalOutput :stream="stream" min-h-0 />
   </div>
 </template>
 
