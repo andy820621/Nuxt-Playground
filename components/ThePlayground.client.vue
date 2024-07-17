@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { FileNode, FileSystemTree } from '@webcontainer/api';
+
 const iframe = ref<HTMLIFrameElement>()
 const wcUrl = ref<string>()
 
@@ -9,23 +11,17 @@ const error = shallowRef<{message: string;}>()
 const stream = ref<ReadableStream>()
 
 async function startDevServer() {
-  const rawFiles = import.meta.glob('../templates/basic/*.*', {
-    query: '?raw',
-    import: 'default',
-    eager: true,
-  });
-
-  const files = Object.fromEntries(
-    Object.entries(rawFiles).map(([path, content]) => {
-      return [path.replace('../templates/basic/', ''), {
-        file: {
-          contents: content,
-        },
-      }]
-    }),
-  ) as {
-    readonly [Symbol.toStringTag]: string;
-  };
+  const tree = globFilesToWebContainerFs(
+    '../templates/nitro/',
+    import.meta.glob([
+      '../templates/nitro/**/*.*',
+      '!**/node_modules/**',
+    ], {
+      query: '?raw',
+      import: 'default',
+      eager: true,
+    })
+  );
 
   const webcontainerInstance = await useWebContainer()
 
@@ -40,7 +36,7 @@ async function startDevServer() {
   })
 
   status.value = 'mounting'
-  await webcontainerInstance.mount(files)
+  await webcontainerInstance.mount(tree)
   
   status.value = 'installing'
   const installProcess = await webcontainerInstance.spawn('npm', ['install'])
@@ -67,6 +63,10 @@ async function startDevServer() {
   }
 }
 
+function sendMessage() {
+  if (iframe.value) iframe.value.contentWindow?.postMessage('hello', '*')
+}
+
 watchEffect(() => {
   if (iframe.value && wcUrl.value) iframe.value.src = wcUrl.value
 })
@@ -83,6 +83,7 @@ onMounted(startDevServer)
     
 
     <TerminalOutput :stream="stream" min-h-0 />
+    <button @click="sendMessage">sendMessage</button>
   </div>
 </template>
 
