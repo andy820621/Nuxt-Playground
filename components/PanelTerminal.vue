@@ -4,7 +4,7 @@
       <div i-ph-terminal-window-duotone />
       <span text-sm>Terminal</span>
     </div>
-    <div ref="root" class="w-full h-full" />
+    <div ref="root" w-full h-full of-hidden />
   </div>
 </template>
 
