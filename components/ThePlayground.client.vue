@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import type { FileNode, FileSystemTree } from '@webcontainer/api';
+// @ts-expect-error missing type
+import { Pane, Splitpanes } from 'splitpanes'
+
+const isDragging = usePanelDragging()
+const panelSizeEditor = useLocalStorage('nuxt-playground-panel-editor', 30)
+const panelSizeFrame = useLocalStorage('nuxt-playground-panel-frame', 30)
 
 const iframe = ref<HTMLIFrameElement>()
 const wcUrl = ref<string>()
@@ -63,28 +68,43 @@ async function startDevServer() {
   }
 }
 
-function sendMessage() {
-  if (iframe.value) iframe.value.contentWindow?.postMessage('hello', '*')
-}
-
 watchEffect(() => {
   if (iframe.value && wcUrl.value) iframe.value.src = wcUrl.value
 })
 
 onMounted(startDevServer)
+
+function startDragging() {
+  isDragging.value = true
+}
+function endDragging(e: { size: number }[]) {
+  isDragging.value = false
+}
 </script>
 
 <template>
-  <div max-h-full w-full grid="~ rows-[2fr_1fr]" of-hidden>
-    <iframe v-show="status === 'ready'" ref="iframe" w-full h-full />
-    <div v-if="status !== 'ready'" w-full h-full flex="~ col items-center justify-center" capitalize text-lg>
-      <div i-svg-spinners-90-ring-with-bg /> {{ status }}
-    </div>
-    
+  <Splitpanes 
+    max-h-full w-full of-hidden horizontal
+    @resize="startDragging" @resized="endDragging"
+  >
+    <Pane :size="panelSizeEditor" min-size="10">
+      "This is the editor pane"
+    </Pane>
 
-    <TerminalOutput :stream="stream" min-h-0 />
-    <button @click="sendMessage">sendMessage</button>
-  </div>
+    <Pane :size="panelSizeFrame" min-size="10">
+      <iframe 
+        v-show="status === 'ready'" ref="iframe" w-full h-full :class="{ 'pointer-events-none': isDragging }" 
+      />
+
+      <div v-if="status !== 'ready'" w-full h-full flex="~ col items-center justify-center" capitalize text-lg>
+        <div i-svg-spinners-90-ring-with-bg /> {{ status }}
+      </div>
+    </Pane>
+
+    <Pane>
+      <TerminalOutput :stream="stream" min-h-0 />
+    </Pane>
+  </Splitpanes>
 </template>
 
 <style scoped>
