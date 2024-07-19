@@ -20,9 +20,7 @@ async function startDevServer() {
     '../templates/basic/',
     import.meta.glob([
       '../templates/basic/**/*.*',
-      '../templates/basic/**/.*',
-      '!../.DS_Store',
-      '!**/node_modules/**',
+      '../templates/basic/**/.npmrc',
     ], {
       query: '?raw',
       import: 'default',
@@ -103,6 +101,7 @@ function endDragging(e: { size: number }[]) {
         :src="wcUrl"
         :class="{ 'pointer-events-none': isDragging }"
         w-full h-full
+        bg-transparent
         allow="geolocation; microphone; camera; payment; autoplay; serial; cross-origin-isolated"
       />
 
