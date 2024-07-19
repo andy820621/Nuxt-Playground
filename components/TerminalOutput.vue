@@ -1,5 +1,5 @@
 <template>
-  <div ref="root"></div>
+  <div ref="root" w-full h-full></div>
 </template>
 
 <script setup lang="ts">
@@ -34,6 +34,8 @@ watch(
   },
   { flush: 'sync', immediate: true }
 )
+
+useResizeObserver(root, useDebounceFn(() => fitAddon.fit(), 200))
 
 onMounted(() => {
   terminal.open(root.value!)
