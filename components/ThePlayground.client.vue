@@ -92,7 +92,7 @@ function endDragging(e: { size: number }[]) {
     @resize="startDragging" @resized="endDragging"
   >
     <Pane :size="panelSizeEditor" min-size="10">
-      "This is the editor pane"
+      <PanelEditor />
     </Pane>
 
     <Pane :size="panelSizeFrame" min-size="10">
@@ -106,7 +106,7 @@ function endDragging(e: { size: number }[]) {
     </Pane>
 
     <Pane>
-      <TerminalOutput :stream="stream" />
+      <PanelTerminal :stream="stream" />
     </Pane>
   </Splitpanes>
 </template>
