@@ -3,8 +3,8 @@
 import { Pane, Splitpanes } from 'splitpanes'
 
 const isDragging = usePanelDragging()
-const panelSizeEditor = useLocalStorage('nuxt-playground-panel-editor', 30)
-const panelSizeFrame = useLocalStorage('nuxt-playground-panel-frame', 30)
+const panelSizeEditor = usePanelCookie('nuxt-playground-panel-editor', 30)
+const panelSizeFrame = usePanelCookie('nuxt-playground-panel-frame', 30)
 
 const iframe = ref<HTMLIFrameElement>()
 const wcUrl = ref<string>()
@@ -72,10 +72,6 @@ async function startDevServer() {
   }
 }
 
-watchEffect(() => {
-  if (iframe.value && wcUrl.value) iframe.value.src = wcUrl.value
-})
-
 onMounted(startDevServer)
 
 function startDragging() {
@@ -102,7 +98,12 @@ function endDragging(e: { size: number }[]) {
       </div>
 
       <iframe 
-        v-show="status === 'ready'" ref="iframe" w-full h-full :class="{ 'pointer-events-none': isDragging }" 
+        v-if="wcUrl"
+        ref="iframe"
+        :src="wcUrl"
+        :class="{ 'pointer-events-none': isDragging }"
+        w-full h-full
+        allow="geolocation; microphone; camera; payment; autoplay; serial; cross-origin-isolated"
       />
 
       <div v-if="status !== 'ready'" w-full h-full flex="~ col items-center justify-center" capitalize text-lg>
