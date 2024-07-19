@@ -19,7 +19,7 @@ function end(e: { size: number }[]) {
     <Pane :size="leftSize" min-size="10">
       <PanelGuide />
     </Pane>
-    <Pane>
+    <Pane :size="100 - leftSize">
       <ThePlayground />
     </Pane>
   </Splitpanes>
