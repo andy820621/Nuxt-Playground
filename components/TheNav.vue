@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <nav px6 py3 text-lg border="b base" flex="~ gap-1 items-center">
+  <nav px4 py3 text-lg border="b base" flex="~ gap-1 items-center">
     <NuxtLink to="/" title="Nuxt Playground">
       <NuxtLogo class="h-2em" />
     </NuxtLink>

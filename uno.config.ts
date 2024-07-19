@@ -12,6 +12,7 @@ export default defineConfig({
 	shortcuts: {
 		'border-base': 'border-gray-200 dark:border-gray-800',
 		'bg-active': 'bg-gray/24 dark:bg-gray-800',
+		'bg-faded': 'bg-gray:5',
 		'bg-base': 'bg-white dark:bg-[#050420]',
 	},
 	theme: {
