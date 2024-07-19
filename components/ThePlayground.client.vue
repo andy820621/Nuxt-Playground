@@ -32,8 +32,10 @@ async function startDevServer() {
 
   // Evant Handler
   webcontainerInstance.on('server-ready', (port, url) => {
-    status.value = 'ready'
-    wcUrl.value = url
+    if (port === 3000) {
+      status.value = 'ready'
+      wcUrl.value = url
+    }
   })
   webcontainerInstance.on('error', (err) => {
     status.value = 'error'
