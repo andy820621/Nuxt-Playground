@@ -8,3 +8,7 @@ export function usePanelCookie(name: string, value: number) {
     { default: () => (value), watch: true },
   )
 }
+
+export function useTerminalStream() {
+  return useState<ReadableStream | undefined>('terminal-stream', () => undefined)
+}

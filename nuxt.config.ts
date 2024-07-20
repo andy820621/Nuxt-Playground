@@ -3,11 +3,12 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	compatibilityDate: "2024-07-04",
 	modules: [
-		"@vueuse/nuxt",
-		"@unocss/nuxt",
-		"@nuxt/content",
-		"@nuxtjs/color-mode",
-	],
+        "@vueuse/nuxt",
+        "@unocss/nuxt",
+        "@nuxt/content",
+        "@nuxtjs/color-mode",
+        "@nuxt/image"
+    ],
 	colorMode: {
 		classSuffix: "",
 	},
