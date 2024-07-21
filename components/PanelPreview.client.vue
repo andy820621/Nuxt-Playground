@@ -39,13 +39,17 @@
 </template>
 
 <script setup lang="ts">
+const isDragging = usePanelDragging()
+const playground = useGlobalPlayground()
+playground.value = createPlayground()
+
 const {
   mount,
   previewLocation,
   previewUrl,
   status,
-} = usePlayground()
-const isDragging = usePanelDragging()
+} = playground.value
+
 const iframe = ref<HTMLIFrameElement>()
 const inputUrl = ref<string>('')
 // auto update inputUrl when location value changed

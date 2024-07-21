@@ -12,6 +12,9 @@ export default defineNuxtConfig({
 	colorMode: {
 		classSuffix: "",
 	},
+	typescript: {
+    includeWorkspace: true,
+  },
 	nitro: {
 		routeRules: {
 			'**': {

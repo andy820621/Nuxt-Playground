@@ -1,9 +1,16 @@
-export function usePlayground() {
+import { loadTemplate } from '../templates/basic'
+
+if (import.meta.server)
+  throw new Error('This file should not be imported on the server')
+
+export type PlaygroundInstance = ReturnType<typeof createPlayground>
+
+export function createPlayground() {
   type Status = 'init' | 'mounting' | 'installing' | 'error' | 'start' | 'ready'
 
   const status = ref<Status>('init')
   const error = shallowRef<{ message: string }>()
-  const stream = useTerminalStream()
+  const stream = ref<ReadableStream | undefined>()
 
   const previewLocation = ref({
     origin: '',
@@ -26,23 +33,19 @@ export function usePlayground() {
     }
   })
 
-  const tree = globFilesToWebContainerFs(
-    '../templates/basic/',
-    import.meta.glob([
-      '../templates/basic/**/*.*',
-      '../templates/basic/**/.npmrc',
-    ], {
-      as: 'raw',
-      eager: true,
-    }),
-  )
-
-  console.log({ tree })
+  const {
+    files,
+    tree,
+  } = loadTemplate()
 
   async function mount() {
-    const webContainer = await useWebContainer()
+    const wc = await useWebContainer()
 
-    webContainer.on('server-ready', (port, url) => {
+    files.forEach((file) => {
+      file.wc = wc
+    })
+
+    wc.on('server-ready', (port, url) => {
       // Nuxt listen to multiple ports, and 'server-ready' is emitted for each of them
       // We need the main one
       if (port === 3000) {
@@ -54,17 +57,17 @@ export function usePlayground() {
       }
     })
 
-    webContainer.on('error', (err) => {
+    wc.on('error', (err) => {
       status.value = 'error'
       error.value = err
     })
 
     status.value = 'mounting'
-    await webContainer.mount(tree)
+    await wc.mount(tree)
 
     status.value = 'installing'
 
-    const installProcess = await webContainer.spawn('pnpm', ['install'])
+    const installProcess = await wc.spawn('pnpm', ['install'])
     stream.value = installProcess.output
     const installExitCode = await installProcess.exit
 
@@ -77,19 +80,20 @@ export function usePlayground() {
     }
 
     status.value = 'start'
-    const devProcess = await webContainer.spawn('pnpm', ['run', 'dev'])
+    const devProcess = await wc.spawn('pnpm', ['run', 'dev'])
     stream.value = devProcess.output
 
     // In dev, when doing HMR, we kill the previous process while reusing the same WebContainer
     if (import.meta.hot) import.meta.hot.accept(devProcess.kill)
   }
 
-  return {
+  return markRaw({
+    files,
     status,
     error,
     stream,
     mount,
     previewUrl,
     previewLocation,
-  }
+  })
 }
