@@ -52,7 +52,5 @@ function endDraggingHorizontal(e: { size: number }[]) {
         </Pane>
       </Splitpanes>
     </Pane>
-      </Splitpanes>
-    </Pane>
   </Splitpanes>
 </template>

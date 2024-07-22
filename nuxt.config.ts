@@ -30,6 +30,6 @@ export default defineNuxtConfig({
     build: {
       minify: 'esbuild',
       cssMinify: 'esbuild',
-    },
-  }, 
+    }
+  }
 });
