@@ -34,6 +34,8 @@ export async function mountPlayground(play: PlaygroundState) {
   const wc = await useWebContainer()
 
   play.files = files
+  play.webcontainer = wc
+
   files.forEach((file) => {
     file.wc = wc
   })
