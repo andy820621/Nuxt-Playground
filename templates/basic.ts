@@ -1,4 +1,4 @@
-import { File } from '../structures/File'
+import { VirtualFile } from '../structures/VirtualFile'
 import { filesToWebContainerFs } from './utils'
 
 export function loadTemplate() {
@@ -13,7 +13,7 @@ export function loadTemplate() {
 
   const files = Object.entries(rawInput)
     .map(([path, content]) => {
-      return new File(path.replace('./basic/', ''), content)
+      return new VirtualFile(path.replace('./basic/', ''), content)
     })
 
   const tree = filesToWebContainerFs(
