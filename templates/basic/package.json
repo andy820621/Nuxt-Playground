@@ -4,8 +4,11 @@
     "dev": "nuxt dev --no-qr",
     "prepare": "nuxt prepare"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.6.0",
   "devDependencies": {
     "nuxt": "latest"
+  },
+  "dependencies": {
+    "birpc": "^0.2.17"
   }
 }

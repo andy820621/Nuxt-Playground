@@ -11,10 +11,11 @@
     "lint": "eslint .",
     "format": "eslint . --fix"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.6.0",
   "dependencies": {
     "@webcontainer/api": "^1.2.0",
     "@xterm/addon-fit": "^0.10.0",
+    "birpc": "^0.2.17",
     "splitpanes": "^3.1.5"
   },
   "devDependencies": {

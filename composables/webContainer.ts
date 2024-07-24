@@ -25,24 +25,6 @@ export async function mountPlayground(play: PlaygroundState, colorMode: string,)
     }
   }
 
-  window.addEventListener('message', (event) => {
-    if (event.origin !== play.previewLocation.origin)
-      return
-
-    switch (event.data.type) {
-      case 'update:path':
-        play.previewLocation.fullPath = event.data.path
-        break
-      // We wait for the client to send the ready message
-      // So we don't show the loading screen
-      case 'ready':
-        play.status = 'ready'
-        break
-      default:
-        break
-    }
-  })
-
   const wc = await useWebContainer()
 
   play.files = files
