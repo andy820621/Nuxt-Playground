@@ -7,6 +7,7 @@ import {
 	presetTypography,
 	transformerDirectives,
 } from "unocss";
+import extractorMdc from '@unocss/extractor-mdc'
 
 export default defineConfig({
 	shortcuts: {
@@ -35,5 +36,13 @@ export default defineConfig({
 			},
 		})
 	],
+	extractors: [
+    extractorMdc(),
+  ],
+  content: {
+    filesystem: [
+      './content/**/*.md',
+    ],
+  },
 	transformers: [transformerDirectives()],
 });
