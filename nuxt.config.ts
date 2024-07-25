@@ -45,4 +45,9 @@ export default defineNuxtConfig({
     //   ],
     // },
   },
+	app: {
+    head: {
+      titleTemplate: '%s - Nuxt Playground',
+    },
+  },
 });
