@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const ui = useUiState()
 </script>
 
 <template>
@@ -9,6 +9,15 @@
     </NuxtLink>
 
     <div flex-auto />
+
+    <button
+      rounded p2
+      hover="bg-active"
+      :class="ui.showTerminal ? '' : 'op50'"
+      @click="ui.toggleTerminal()"
+    >
+      <div i-ph-terminal-window-duotone text-2xl />
+    </button>
 
     <ColorSchemeToggle />
     <NuxtLink
