@@ -32,7 +32,7 @@ function getTextClass(status: PlaygroundStatus) {
     case 'current':
       return ''
     case 'done':
-      return 'text-primary'
+      return 'animate-pulse'
     case 'todo':
       return 'op50'
   }
