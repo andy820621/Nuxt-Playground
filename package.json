@@ -7,6 +7,7 @@
     "dev": "nuxt dev -o --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
     "postinstall": "nuxt prepare && pnpm -C ./templates/basic install && pnpm -C ./templates/basic prepare",
     "lint": "eslint .",
     "format": "eslint . --fix"
@@ -35,6 +36,7 @@
     "nuxt": "^3.12.3",
     "theme-vitesse": "^0.8.0",
     "unocss": "^0.61.2",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-tsc": "^2.0.29"
   }
 }
