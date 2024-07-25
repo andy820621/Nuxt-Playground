@@ -25,6 +25,7 @@
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.2",
     "@pinia/nuxt": "^0.5.1",
+    "@types/splitpanes": "^2.2.6",
     "@unocss/nuxt": "^0.61.2",
     "@unocss/reset": "^0.61.2",
     "@vueuse/core": "^10.11.0",

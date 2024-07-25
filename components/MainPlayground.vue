@@ -1,10 +1,4 @@
-<!--
-Please create an issue first before submiting PRs.
-So that we can discuss about the directions and plans, to avoid wasted efforts. Thank you!
--->
-
 <script setup lang="ts">
-// @ts-expect-error missing type
 import { Pane, Splitpanes } from 'splitpanes'
 
 const ui = useUiState()
