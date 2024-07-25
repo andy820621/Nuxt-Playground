@@ -35,7 +35,6 @@
     "@xterm/xterm": "^5.5.0",
     "eslint": "^8.57.0",
     "nuxt": "^3.12.4",
-    "remark-external-links": "^9.0.1",
     "theme-vitesse": "^0.8.1",
     "unocss": "^0.61.5",
     "vue": "latest",

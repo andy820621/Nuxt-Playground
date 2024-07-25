@@ -39,10 +39,10 @@ export default defineNuxtConfig({
         dark: 'vitesse-dark',
       },
     },
-    markdown: {
-      remarkPlugins: [
-        'remark-external-links',
-      ],
-    },
+    // markdown: {
+    //   remarkPlugins: [
+    //     'remark-external-links',
+    //   ],
+    // },
   },
 });
