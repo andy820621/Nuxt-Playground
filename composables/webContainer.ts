@@ -13,7 +13,10 @@ export async function useWebContainer() {
   return await _webContainerPromise
 }
 
-export async function mountPlayground(play: PlaygroundState, colorMode: string,) {
+export async function mountPlayground(
+  play: PlaygroundState,
+  colorMode: string,
+) {
   const { files, tree } = await templates.basic({
     nuxtrc: [
       // Have color mode on initial load
@@ -25,14 +28,14 @@ export async function mountPlayground(play: PlaygroundState, colorMode: string,)
 
   const wc = await useWebContainer()
 
-  play.files = files
   play.webcontainer = wc
+  play.files = files
 
   files.forEach((file) => {
     file.wc = wc
   })
 
-  wc.on('server-ready', (port, url) => {
+  wc.on('server-ready', async (port, url) => {
     // Nuxt listen to multiple ports, and 'server-ready' is emitted for each of them
     // We need the main one
     if (port === 3000) {
@@ -78,7 +81,7 @@ export async function mountPlayground(play: PlaygroundState, colorMode: string,)
       }
       throw new Error('Unable to run npm install')
     }
-    
+
     play.status = 'start'
     processDev = await wc.spawn('pnpm', ['run', 'dev'])
     play.stream = processDev.output
@@ -88,6 +91,8 @@ export async function mountPlayground(play: PlaygroundState, colorMode: string,)
 
   // In dev, when doing HMR, we kill the previous process while reusing the same WebContainer
   if (import.meta.hot) {
-    import.meta.hot.accept(killPreviousProcess)
+    import.meta.hot.accept(() => {
+      killPreviousProcess()
+    })
   }
 }
