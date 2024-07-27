@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { createBirpc } from 'birpc';
-import type { FrameFunctions, ParentFunctions } from '~/types/rpc';
-
-
+import { createBirpc } from 'birpc'
+import type { FrameFunctions, ParentFunctions } from '~/types/rpc'
 
 const ui = useUiState()
 const play = usePlaygroundStore()
@@ -27,10 +25,12 @@ const rpc = createBirpc<FrameFunctions, ParentFunctions>({
   on(fn) {
     window.addEventListener('message', (event) => {
       if (
-        typeof event.data !== 'object' || 
-        event.data.source !== 'nuxt-playground-frame'
-      ) return
-      
+        typeof event.data !== 'object'
+        || event.data.source !== 'nuxt-playground-frame'
+      ) {
+        return
+      }
+
       fn(event.data.payload)
     })
   },

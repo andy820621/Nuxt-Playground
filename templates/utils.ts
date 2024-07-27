@@ -23,11 +23,13 @@ export function filesToWebContainerFs(
         }
 
         const node = current[dir]
-        if (!('directory' in node)) throw new Error('Unexpected directory but found file')
+        if (!('directory' in node))
+          throw new Error('Unexpected directory but found file')
         current = node.directory
       }
 
-      if (filename) current[filename] = file.toNode()
+      if (filename)
+        current[filename] = file.toNode()
     }
   }
 

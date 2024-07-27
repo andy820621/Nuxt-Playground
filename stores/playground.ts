@@ -1,6 +1,6 @@
 import type { Raw } from 'vue'
-import type { VirtualFile } from '../structures/VirtualFile'
 import type { WebContainer } from '@webcontainer/api'
+import type { VirtualFile } from '../structures/VirtualFile'
 
 // types definition
 export const PlaygroundStatusOrder = [
@@ -12,8 +12,8 @@ export const PlaygroundStatusOrder = [
 ] as const
 export type PlaygroundStatus = typeof PlaygroundStatusOrder[number] | 'error'
 export interface PlaygroundActions {
-  restartServer(): Promise<void>
-  downloadZip(): Promise<void>
+  restartServer: () => Promise<void>
+  downloadZip: () => Promise<void>
 }
 
 export const usePlaygroundStore = defineStore('playground', () => {

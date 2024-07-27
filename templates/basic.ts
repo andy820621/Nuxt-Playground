@@ -12,7 +12,7 @@ export default function load(options: TemplateOptions = {}) {
     query: '?raw',
     import: 'default',
     eager: true,
-  }) as Record<string, string>;
+  }) as Record<string, string>
 
   const rawFiles = {
     ...Object.fromEntries(

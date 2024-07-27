@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div w-screen h-screen h-100dvh>
+  <div h-100dvh h-screen w-screen>
     <main
       h-100dvh h-screen w-screen of-hidden
       grid="~ rows-[max-content_1fr]"

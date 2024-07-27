@@ -20,7 +20,8 @@ function endDraggingHorizontal(e: { size: number }[]) {
 }
 
 const terminalPaneProps = computed(() => {
-  if (ui.showTerminal) return ({ size: 100 - ui.panelEditor - ui.panelPreview,})
+  if (ui.showTerminal)
+    return ({ size: 100 - ui.panelEditor - ui.panelPreview })
 
   else return ({ size: 0, maxSize: 0 })
 })
@@ -71,13 +72,13 @@ const panelInitTerminal = computed(() => isMounted.value || {
         <Pane :size="ui.panelEditor" min-size="10" :style="panelInitEditor">
           <PanelEditor :files="play.files" />
         </Pane>
-        
+
         <PaneSplitter />
 
         <Pane :size="ui.panelPreview" min-size="10" :style="panelInitPreview">
           <PanelPreview />
         </Pane>
-        
+
         <PaneSplitter />
 
         <Pane

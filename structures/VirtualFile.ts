@@ -8,6 +8,7 @@ export class VirtualFile {
   ) {}
 
   toNode(): FileNode {
+    // eslint-disable-next-line ts/no-this-alias
     const self = this
     return {
       file: {

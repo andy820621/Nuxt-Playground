@@ -22,7 +22,7 @@ export const useUiState = defineStore('ui', () => {
   )
 
   Object.assign(persistState, stateCookie.value)
-  
+
   watch(persistState, () => {
     stateCookie.value = { ...persistState }
   })

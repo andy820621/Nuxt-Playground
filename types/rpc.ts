@@ -1,8 +1,8 @@
 export interface FrameFunctions {
-  onColorModeChange(mode: string): void
+  onColorModeChange: (mode: string) => void
 }
 
 export interface ParentFunctions {
-  onReady(): void
-  onNavigate(path: string): void
+  onReady: () => void
+  onNavigate: (path: string) => void
 }

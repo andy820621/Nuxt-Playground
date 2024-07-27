@@ -67,4 +67,4 @@ function navigate() {
       <PanelPreviewClient ref="inner" />
     </div>
   </div>
-  </template>
+</template>

@@ -33,9 +33,11 @@ export default defineNuxtPlugin(() => {
       on(fn) {
         window.addEventListener('message', (event) => {
           if (
-            typeof event.data !== 'object' || 
-            event.data.source !== 'nuxt-playground-parent'
-          ) return
+            typeof event.data !== 'object'
+            || event.data.source !== 'nuxt-playground-parent'
+          ) {
+            return
+          }
 
           fn(event.data.payload)
         })

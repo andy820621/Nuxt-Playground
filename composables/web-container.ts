@@ -87,7 +87,7 @@ export async function mountPlayground(
     processDev = await wc.spawn('pnpm', ['run', 'dev', '--no-qr'])
     play.stream = processDev.output
   }
-  
+
   async function downloadZip() {
     const { default: JSZip } = await import('jszip')
     const zip = new JSZip()
@@ -129,7 +129,6 @@ export async function mountPlayground(
     link.remove()
     URL.revokeObjectURL(url)
   }
-
 
   startServer()
 

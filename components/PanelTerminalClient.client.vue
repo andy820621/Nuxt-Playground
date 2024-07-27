@@ -1,12 +1,8 @@
-<template>
-  <div ref="root" h-full w-full of-hidden />
-</template>
-
 <script setup lang="ts">
 import '@xterm/xterm/css/xterm.css'
 import type { ITheme } from '@xterm/xterm'
 import { Terminal } from '@xterm/xterm'
-import { FitAddon } from '@xterm/addon-fit';
+import { FitAddon } from '@xterm/addon-fit'
 import themeLight from 'theme-vitesse/extra/xterm-vitesse-light.json'
 import themeDark from 'theme-vitesse/extra/xterm-vitesse-dark.json'
 
@@ -40,15 +36,15 @@ watch(
   },
 )
 
-
 const fitAddon = new FitAddon()
 terminal.loadAddon(fitAddon)
 
 watch(
   () => play.stream,
   (newS) => {
-    if (!newS) return
-    
+    if (!newS)
+      return
+
     try {
       const reader = newS.getReader()
       function read() {
@@ -64,7 +60,7 @@ watch(
       console.error(e)
     }
   },
-  { flush: 'sync', immediate: true }
+  { flush: 'sync', immediate: true },
 )
 
 useResizeObserver(root, useDebounceFn(() => fitAddon.fit(), 200))
@@ -81,5 +77,9 @@ const stop = watch(
   },
 )
 </script>
+
+<template>
+  <div ref="root" h-full w-full of-hidden />
+</template>
 
 <style scoped></style>
