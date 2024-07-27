@@ -27,11 +27,11 @@ function selectFile(file: VirtualFile) {
   input.value = file.read()
 }
 
-// function onTextInput() {
-//   // TODO: add throttle
-//   if (input.value != null)
-//     selectedFile?.value?.write(input.value)
-// }
+function onTextInput() {
+  // TODO: add throttle
+  if (input.value != null)
+    selectedFile?.value?.write(input.value)
+}
 </script>
 
 <template>
@@ -69,6 +69,7 @@ function selectFile(file: VirtualFile) {
         v-model="input"
         :filepath="selectedFile.filepath"
         h-full w-full
+        @change="onTextInput"
       />
     </div>
   </div>

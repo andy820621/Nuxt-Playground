@@ -7,6 +7,10 @@ const props = defineProps<{
   filepath: string
 }>()
 
+const emit = defineEmits<{
+  (event: 'update:modelValue', value: string): void
+}>()
+
 const el = ref<HTMLDivElement | null>(null)
 
 const models = new Map<string, monaco.editor.ITextModel>()
@@ -48,7 +52,7 @@ function getModel(filepath: string) {
 }
 
 watch(
-  () => el.value,
+  el,
   (value) => {
     if (!value)
       return
@@ -63,6 +67,10 @@ watch(
         },
       },
     )
+
+    editor.onDidChangeModelContent(() => {
+      emit('update:modelValue', editor.getValue())
+    })
 
     watch(
       () => props.filepath,
