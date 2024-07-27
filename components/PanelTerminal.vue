@@ -19,7 +19,7 @@ const play = usePlaygroundStore()
         v-if="play.status !== 'init' && play.status !== 'mount'"
         hover="bg-active" rounded p1
         title="Restart terminal"
-        @click="play.actions.restartServer()"
+        @click="play.restartServer()"
       >
         <div i-ph-arrow-clockwise-duotone />
       </button>
