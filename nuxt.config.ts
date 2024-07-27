@@ -30,6 +30,12 @@ export default defineNuxtConfig({
       minify: 'esbuild',
       cssMinify: 'esbuild',
     },
+    server: {
+      headers: {
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+        'Cross-Origin-Opener-Policy': 'same-origin',
+      },
+    },
   },
   content: {
     highlight: {
