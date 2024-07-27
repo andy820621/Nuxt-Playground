@@ -1,14 +1,11 @@
 {
   "private": true,
+  "packageManager": "pnpm@9.6.0",
   "scripts": {
     "dev": "nuxt dev",
     "prepare": "nuxt prepare"
   },
-  "packageManager": "pnpm@9.6.0",
   "devDependencies": {
     "nuxt": "latest"
-  },
-  "dependencies": {
-    "birpc": "^0.2.17"
   }
 }
