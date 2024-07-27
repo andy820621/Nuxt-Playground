@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "nuxt dev --no-qr",
+    "dev": "nuxt dev",
     "prepare": "nuxt prepare"
   },
   "packageManager": "pnpm@9.6.0",
