@@ -41,6 +41,10 @@ function syncColorMode() {
 }
 
 watch(colorMode, syncColorMode, { flush: 'sync' })
+
+defineExpose({
+  iframe,
+})
 </script>
 
 <template>
