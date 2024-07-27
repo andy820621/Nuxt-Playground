@@ -14,7 +14,7 @@ const props = withDefaults(
 
 const files = computed(() => props.files.filter(file => !isFileIgnored(file.filepath)))
 const selectedFile = ref<VirtualFile>()
-const input = ref<string>()
+const input = ref<string>('')
 
 // Select the first file by default.
 watchEffect(() => {
@@ -27,11 +27,11 @@ function selectFile(file: VirtualFile) {
   input.value = file.read()
 }
 
-function onTextInput() {
-  // TODO: add throttle
-  if (input.value != null)
-    selectedFile?.value?.write(input.value)
-}
+// function onTextInput() {
+//   // TODO: add throttle
+//   if (input.value != null)
+//     selectedFile?.value?.write(input.value)
+// }
 </script>
 
 <template>
@@ -57,11 +57,18 @@ function onTextInput() {
           {{ file.filepath }}
         </button>
       </div>
-      <textarea
+      <!-- <textarea
         v-model="input"
         border="l base"
         h-full w-full resize-none bg-transparent p4 font-mono
         @input="onTextInput"
+      /> -->
+
+      <PanelEditorClient
+        v-if="selectedFile"
+        v-model="input"
+        :filepath="selectedFile.filepath"
+        h-full w-full
       />
     </div>
   </div>
