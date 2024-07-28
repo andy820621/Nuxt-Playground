@@ -15,6 +15,7 @@ export default defineConfig({
     'bg-active': 'bg-gray/24 dark:bg-gray-800',
     'bg-faded': 'bg-gray:5',
     'bg-base': 'bg-white dark:bg-[#050420]',
+    'text-faded': 'text-gray6:100 dark:text-gray:100',
   },
   theme: {
     colors: {
