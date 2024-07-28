@@ -38,6 +38,7 @@
     "jszip": "^3.10.1",
     "monaco-editor": "^0.50.0",
     "nuxt": "^3.12.4",
+    "shiki": "^1.12.0",
     "theme-vitesse": "^0.8.1",
     "unocss": "^0.61.5",
     "vue": "latest",
