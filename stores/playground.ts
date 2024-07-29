@@ -2,7 +2,6 @@ import type { Raw } from 'vue'
 import type { WebContainer, WebContainerProcess } from '@webcontainer/api'
 import type { VirtualFile } from '../structures/VirtualFile'
 
-// types definition
 export const PlaygroundStatusOrder = [
   'init',
   'mount',
@@ -14,16 +13,16 @@ export type PlaygroundStatus = typeof PlaygroundStatusOrder[number] | 'error'
 
 export const usePlaygroundStore = defineStore('playground', () => {
   const status = ref<PlaygroundStatus>('init')
-  const error = shallowRef<{ message: string }>()
-  const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>()
-  const files = shallowRef<Raw<VirtualFile>[]>([])
-  const webcontainer = shallowRef<Raw<WebContainer>>()
+  const error = shallowRef<{ message: string }>() // 用於存儲錯誤信息
+  const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>() // 當前運行的進程
+  const files = shallowRef<Raw<VirtualFile>[]>([]) // 存儲虛擬文件列表
+  const webcontainer = shallowRef<Raw<WebContainer>>() // WebContainer 實例
 
   const previewLocation = ref({
     origin: '',
     fullPath: '',
   })
-  const previewUrl = ref('')
+  const previewUrl = ref('') // 完整的預覽 URL
 
   function updatePreviewUrl() {
     previewUrl.value = previewLocation.value.origin + previewLocation.value.fullPath
@@ -31,32 +30,31 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
   const colorMode = useColorMode()
 
-  // Mount the playground on client side
+  // 在客戶端側掛載 playground
   if (import.meta.client) {
     async function mount() {
-      const { templates } = await import('../templates')
-      const { files: _files, tree } = await templates.basic({
+      const { templates } = await import('../templates') // 導入模板
+      const { files: _files, tree } = await templates.basic({ // 獲取模板文件及虛擬文件樹
         nuxtrc: [
-          // Have color mode on initial load
+          // 根據顏色模式設置初始 HTML 類
           colorMode.value === 'dark'
             ? 'app.head.htmlAttrs.class=dark'
             : '',
         ],
       })
 
-      const wc = await import('@webcontainer/api')
-        .then(({ WebContainer }) => WebContainer.boot())
+      const wc = await import('@webcontainer/api') // 導入 WebContainer
+        .then(({ WebContainer }) => WebContainer.boot()) // 啟動 WebContainer
 
-      webcontainer.value = wc
-      files.value = _files
+      webcontainer.value = wc // 存儲 WebContainer 實例
+      files.value = _files // 存儲文件列表
 
-      _files.forEach((file) => {
+      _files.forEach((file) => { // 為每個文件添加 WebContainer 引用
         file.wc = wc
       })
 
       wc.on('server-ready', async (port, url) => {
-        // Nuxt listen to multiple ports, and 'server-ready' is emitted for each of them
-        // We need the main one
+        // Nuxt 監聽多個端口，'server-ready' 會為每個端口觸發，我們需要專注於主要的那個
         if (port === 3000) {
           previewLocation.value = {
             origin: url,
@@ -75,9 +73,9 @@ export const usePlaygroundStore = defineStore('playground', () => {
       status.value = 'mount'
       await wc.mount(tree)
 
-      startServer()
+      startServer() // 啟動服務器
 
-      // In dev, when doing HMR, we kill the previous process while reusing the same WebContainer
+      // 在開發模式下，進行熱模塊替換時，我們終止之前的進程，同時重用相同的 WebContainer
       if (import.meta.hot) {
         import.meta.hot.accept(() => {
           killPreviousProcess()
@@ -85,12 +83,12 @@ export const usePlaygroundStore = defineStore('playground', () => {
       }
     }
 
-    /* #__PURE__ */ mount()
+    /* #__PURE__ */ mount() // 立即執行 mount 函數
   }
 
-  let abortController: AbortController | undefined
+  let abortController: AbortController | undefined // 用於中止操作的控制器
 
-  function killPreviousProcess() {
+  function killPreviousProcess() { // 終止之前的進程
     abortController?.abort()
     abortController = undefined
     currentProcess.value?.kill()
@@ -98,20 +96,20 @@ export const usePlaygroundStore = defineStore('playground', () => {
   }
 
   async function startServer() {
-    if (!import.meta.client)
+    if (!import.meta.client) // 如果不是客戶端，直接返回
       return
 
-    killPreviousProcess()
+    killPreviousProcess() // 終止之前的進程
 
     const wc = webcontainer.value!
-    abortController = new AbortController()
-    const signal = abortController.signal
+    abortController = new AbortController() // 創建新的用於中止操作的控制器
+    const signal = abortController.signal // 獲取中止信號
 
     await launchDefaultProcess(wc, signal)
     await launchInteractiveProcess(wc, signal)
   }
 
-  async function spawn(wc: WebContainer, command: string, args: string[] = []) {
+  async function spawn(wc: WebContainer, command: string, args: string[] = []) { // 生成新進程
     if (currentProcess.value)
       throw new Error('A process is already running')
     const process = await wc.spawn(command, args)
@@ -123,7 +121,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
     })
   }
 
-  async function launchDefaultProcess(wc: WebContainer, signal: AbortSignal) {
+  async function launchDefaultProcess(wc: WebContainer, signal: AbortSignal) { // 啟動默認進程
     if (!wc)
       return
 
@@ -132,25 +130,26 @@ export const usePlaygroundStore = defineStore('playground', () => {
     if (signal.aborted)
       return
 
-    const installExitCode = await spawn(wc, 'pnpm', ['install'])
+    const installManager = 'pnpm'
+    const installExitCode = await spawn(wc, installManager, ['install']) // 執行 install
     if (signal.aborted)
       return
 
-    if (installExitCode !== 0) {
+    if (installExitCode !== 0) { // 如果安裝失敗
       status.value = 'error'
       error.value = {
-        message: `Unable to run npm install, exit as ${installExitCode}`,
+        message: `Unable to run ${installManager} install, exit as ${installExitCode}`,
       }
-      throw new Error('Unable to run npm install')
+      throw new Error(`Unable to run ${installManager} install`)
     }
 
-    await spawn(wc, 'pnpm', ['run', 'dev', '--no-qr'])
+    await spawn(wc, installManager, ['run', 'dev', '--no-qr']) // 運行開發服務器
   }
 
-  async function launchInteractiveProcess(wc: WebContainer, signal: AbortSignal) {
+  async function launchInteractiveProcess(wc: WebContainer, signal: AbortSignal) { // 啟動交互式進程
     if (signal.aborted)
       return
-    await spawn(wc, 'jsh')
+    await spawn(wc, 'jsh') // 啟動 jsh
   }
 
   async function downloadZip() {
@@ -164,16 +163,16 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
     type Zip = typeof zip
 
-    const crawlFiles = async (dir: string, zip: Zip) => {
+    const crawlFiles = async (dir: string, zip: Zip) => { // 遍歷文件並添加到 zip
       const files = await wc.fs.readdir(dir, { withFileTypes: true })
 
       await Promise.all(
         files.map(async (file) => {
-          if (isFileIgnored(file.name))
+          if (isFileIgnored(file.name)) // 如果文件被忽略，跳過
             return
 
           if (file.isFile()) {
-            // TODO: If it's package.json, we modify to remove some fields
+            // TODO: 如果是 package.json，我們修改以移除一些字段
             const content = await wc.fs.readFile(`${dir}/${file.name}`, 'utf8')
             zip.file(file.name, content)
           }
@@ -187,20 +186,20 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
     await crawlFiles('.', zip)
 
-    const blob = await zip.generateAsync({ type: 'blob' })
+    const blob = await zip.generateAsync({ type: 'blob' }) // 生成 zip blob
     const url = URL.createObjectURL(blob)
     const date = new Date()
     const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`
     const link = document.createElement('a')
     link.href = url
-    // TODO: have a better name with the current tutorial name
+    // TODO: 使用當前教程名稱生成更好的文件名
     link.download = `nuxt-playground-${dateString}.zip`
     link.click()
     link.remove()
     URL.revokeObjectURL(url)
   }
 
-  return {
+  return { // 返回 store 的公共接口
     status,
     error,
     currentProcess,
@@ -214,7 +213,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
   }
 })
 
-export type PlaygroundStore = ReturnType<typeof usePlaygroundStore>
+export type PlaygroundStore = ReturnType<typeof usePlaygroundStore> // 導出 PlaygroundStore 類型
 
-if (import.meta.hot)
+if (import.meta.hot) // 支持熱模塊替換
   import.meta.hot.accept(acceptHMRUpdate(usePlaygroundStore, import.meta.hot))
