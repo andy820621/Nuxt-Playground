@@ -8,8 +8,11 @@ import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import type { ThemeRegistrationRaw } from '@shikijs/core'
 
 // TODO: material-theme-palenight's format it not compatible with monaco
-import themeDark from 'shiki/themes/vitesse-dark.mjs'
-import themeLight from 'shiki/themes/vitesse-light.mjs'
+// import themeDark from 'shiki/themes/vitesse-dark.mjs'
+// import themeLight from 'shiki/themes/vitesse-light.mjs'
+import themeDark from 'theme-vitesse/themes/vitesse-black.json'
+import themeLight from 'theme-vitesse/themes/vitesse-light.json'
+
 import vueWorker from './vue.worker?worker'
 import { loadWasm, reloadLanguageTools } from './env'
 import type { Store } from './env'
@@ -54,18 +57,34 @@ export function initMonaco(store: Store) {
   monaco.languages.register({ id: 'json', extensions: ['.json'] })
   monaco.languages.register({ id: 'html', extensions: ['.html'] })
 
-  const monacoLightTheme = convertShikiThemeToMonaco(themeLight, 'vs')
-  const monacoDarkTheme = convertShikiThemeToMonaco(themeDark, 'vs-dark')
+  // const monacoLightTheme = convertShikiThemeToMonaco(themeLight, 'vs')
+  // const monacoDarkTheme = convertShikiThemeToMonaco(themeDark, 'vs-dark')
 
   // 應用自定義的背景顏色
-  monacoDarkTheme.colors = {
-    ...monacoDarkTheme.colors,
-    'editor.background': '#00000000',
-    'editor.lineHighlightBackground': '#00000000',
-  }
+  // monacoDarkTheme.colors = {
+  //   ...monacoDarkTheme.colors,
+  //   'editor.background': '#00000000',
+  //   'editor.lineHighlightBackground': '#00000000',
+  // }
 
-  monaco.editor.defineTheme('theme-light', monacoLightTheme)
-  monaco.editor.defineTheme('theme-dark', monacoDarkTheme)
+  // monaco.editor.defineTheme('theme-light', monacoLightTheme)
+  // monaco.editor.defineTheme('theme-dark', monacoDarkTheme)
+
+  monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+    ...monaco.languages.typescript.typescriptDefaults.getCompilerOptions(),
+    noUnusedLocals: false,
+    noUnusedParameters: false,
+    allowUnreachableCode: true,
+    allowUnusedLabels: true,
+    strict: true,
+  })
+
+  const darkColors = (themeDark as any).colors as Record<string, string>
+  darkColors['editor.background'] = '#00000000'
+  darkColors['editor.lineHighlightBackground'] = '#00000000'
+
+  monaco.editor.defineTheme('theme-light', themeLight as any)
+  monaco.editor.defineTheme('theme-dark', themeDark as any)
 
   monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true)
   monaco.languages.onLanguage('vue', () => reloadLanguageTools(store))
