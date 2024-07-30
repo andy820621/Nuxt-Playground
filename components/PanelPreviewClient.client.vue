@@ -11,8 +11,9 @@ const rpc = createBirpc<FrameFunctions, ParentFunctions>({
   onNavigate(path) {
     play.previewLocation.fullPath = path
   },
-  async onReady() {
+  async onReady(info) {
     play.status = 'ready'
+    play.clientInfo = info
     syncColorMode()
   },
 }, {

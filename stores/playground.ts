@@ -1,6 +1,7 @@
 import type { Raw } from 'vue'
 import type { WebContainer, WebContainerProcess } from '@webcontainer/api'
 import type { VirtualFile } from '../structures/VirtualFile'
+import type { ClientInfo } from '~/types/rpc'
 
 export const PlaygroundStatusOrder = [
   'init',
@@ -17,6 +18,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
   const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>() // 當前運行的進程
   const files = shallowRef<Raw<VirtualFile>[]>([]) // 存儲虛擬文件列表
   const webcontainer = shallowRef<Raw<WebContainer>>() // WebContainer 實例
+  const clientInfo = ref<ClientInfo>()
 
   const previewLocation = ref({
     origin: '',
@@ -209,6 +211,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
     previewUrl,
     updatePreviewUrl,
     previewLocation,
+    clientInfo,
     restartServer: startServer,
     downloadZip,
   }

@@ -21,6 +21,11 @@ const timeAgo = useTimeAgo(buildTime)
       </time>
     </NuxtLink>
 
+    <div v-if="play.clientInfo" flex="~ col">
+      Vue version: {{ play.clientInfo.versionVue }}
+      Nuxt version: {{ play.clientInfo.versionNuxt }}
+    </div>
+
     <div flex-auto />
 
     <button
