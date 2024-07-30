@@ -14,14 +14,14 @@ export default defineNuxtConfig({
       ],
     },
   },
-  // typescript: {
-  //   includeWorkspace: true,
-  //   tsConfig: {
-  //     include: [
-  //       './.layer-playground/**',
-  //     ],
-  //   },
-  // },
+  typescript: {
+    includeWorkspace: true,
+    tsConfig: {
+      include: [
+        '../.layer-playground/**/*',
+      ],
+    },
+  },
   css: [
     '~/.layer-playground/styles/base.css',
   ],
