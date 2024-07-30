@@ -140,7 +140,8 @@ export const usePlaygroundStore = defineStore('playground', () => {
       error.value = {
         message: `Unable to run ${installManager} install, exit as ${installExitCode}`,
       }
-      throw new Error(`Unable to run ${installManager} install`)
+      console.log(`Unable to run ${installManager} install`);
+      return
     }
 
     await spawn(wc, installManager, ['run', 'dev', '--no-qr']) // 運行開發服務器
