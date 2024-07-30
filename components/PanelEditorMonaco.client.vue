@@ -109,6 +109,8 @@ watch(
       emit('change', value)
     })
 
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {})
+
     watch(
       () => props.filepath,
       () => {
