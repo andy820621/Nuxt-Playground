@@ -3,6 +3,7 @@ const ui = useUiState()
 const play = usePlaygroundStore()
 
 const runtime = useRuntimeConfig()
+const repo = 'https://github.com/andy820621/Nuxt-Playground'
 
 const buildTime = new Date(runtime.public.buildTime)
 const timeAgo = useTimeAgo(buildTime)
@@ -14,9 +15,11 @@ const timeAgo = useTimeAgo(buildTime)
       <NuxtPlaygroundLogo h-2em />
     </NuxtLink>
 
-    <time text-sm op50 :datetime="buildTime.toISOString()" :title="buildTime.toLocaleString()">
-      Built {{ timeAgo }}
-    </time>
+    <NuxtLink :to="`${repo}/commit/${runtime.public.gitSha}`" target="_blank" title="View on GitHub">
+      <time text-sm op50 :datetime="buildTime.toISOString()" :title="buildTime.toLocaleString()">
+        Built {{ timeAgo }}
+      </time>
+    </NuxtLink>
 
     <div flex-auto />
 
