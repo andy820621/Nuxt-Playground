@@ -2,9 +2,9 @@
 const ui = useUiState()
 const play = usePlaygroundStore()
 
-declare const __BUILD_TIME__: string
+const runtime = useRuntimeConfig()
 
-const buildTime = new Date(__BUILD_TIME__)
+const buildTime = new Date(runtime.public.buildTime)
 const timeAgo = useTimeAgo(buildTime)
 </script>
 

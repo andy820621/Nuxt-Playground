@@ -25,13 +25,15 @@ export default defineNuxtConfig({
       },
     },
   },
+  runtimeConfig: {
+    public: {
+      buildTime: Date.now(),
+    }
+  },
   vite: {
     build: {
       minify: 'esbuild',
       cssMinify: 'esbuild',
-    },
-    define: {
-      __BUILD_TIME__: Date.now(),
     },
     server: {
       headers: {
