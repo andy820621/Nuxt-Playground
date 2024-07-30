@@ -142,7 +142,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
       error.value = {
         message: `Unable to run ${installManager} install, exit as ${installExitCode}`,
       }
-      console.log(`Unable to run ${installManager} install`);
+      console.error(`Unable to run ${installManager} install`)
       return
     }
 

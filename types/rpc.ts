@@ -3,10 +3,9 @@ export interface FrameFunctions {
 }
 
 export interface ParentFunctions {
-  onReady(info: ClientInfo): void
+  onReady: (info: ClientInfo) => void
   onNavigate: (path: string) => void
 }
-
 
 // === Types ===
 

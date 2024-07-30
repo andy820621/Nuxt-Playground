@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     public: {
       buildTime: Date.now(),
       gitSha: execaSync('git', ['rev-parse', 'HEAD']).stdout.trim(),
-    }
+    },
   },
   vite: {
     build: {

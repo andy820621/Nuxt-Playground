@@ -5,7 +5,6 @@ import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
-import type { ThemeRegistrationRaw } from '@shikijs/core'
 
 // TODO: material-theme-palenight's format it not compatible with monaco
 // import themeDark from 'shiki/themes/vitesse-dark.mjs'
@@ -92,22 +91,22 @@ export function initMonaco(store: Store) {
   loadWasm()
 }
 
-function convertShikiThemeToMonaco(shikiTheme: ThemeRegistrationRaw, base: monaco.editor.BuiltinTheme): monaco.editor.IStandaloneThemeData {
-  const rules: monaco.editor.ITokenThemeRule[] = shikiTheme.tokenColors?.flatMap((tokenColor) => {
-    const scopes = Array.isArray(tokenColor.scope) ? tokenColor.scope : [tokenColor.scope]
-    return scopes.map(scope => ({
-      token: scope || '',
-      foreground: tokenColor.settings.foreground,
-      background: tokenColor.settings.background,
-      fontStyle: tokenColor.settings.fontStyle,
-    } as monaco.editor.ITokenThemeRule))
-  }).filter((rule): rule is monaco.editor.ITokenThemeRule => !!rule.token) || []
+// function convertShikiThemeToMonaco(shikiTheme: ThemeRegistrationRaw, base: monaco.editor.BuiltinTheme): monaco.editor.IStandaloneThemeData {
+//   const rules: monaco.editor.ITokenThemeRule[] = shikiTheme.tokenColors?.flatMap((tokenColor) => {
+//     const scopes = Array.isArray(tokenColor.scope) ? tokenColor.scope : [tokenColor.scope]
+//     return scopes.map(scope => ({
+//       token: scope || '',
+//       foreground: tokenColor.settings.foreground,
+//       background: tokenColor.settings.background,
+//       fontStyle: tokenColor.settings.fontStyle,
+//     } as monaco.editor.ITokenThemeRule))
+//   }).filter((rule): rule is monaco.editor.ITokenThemeRule => !!rule.token) || []
 
-  return {
-    base,
-    inherit: false,
-    rules,
-    colors: shikiTheme.colors || {},
-    encodedTokensColors: [],
-  }
-}
+//   return {
+//     base,
+//     inherit: false,
+//     rules,
+//     colors: shikiTheme.colors || {},
+//     encodedTokensColors: [],
+//   }
+// }
