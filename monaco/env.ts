@@ -1,5 +1,5 @@
 import * as volar from '@volar/monaco'
-import { Uri, editor, languages } from 'monaco-editor'
+import { Uri, editor, languages } from 'monaco-editor-core'
 import * as onigasm from 'onigasm' // 引入 onigasm，用於語法高亮
 import onigasmWasm from 'onigasm/lib/onigasm.wasm?url' // 引入 onigasm 的 wasm 文件
 import { getOrCreateModel } from './utils'
@@ -37,30 +37,30 @@ export class WorkerHost {
 
   // 因為 WebContainer 不支持 fs.stat，所以使用 readdir 來檢查文件是否是目錄
   async fsStat(uriString: string) {
-    try {
-      const filepath = new URL(uriString).pathname.replace(/^\/+/, '') // 獲取文件路徑 (不包括路徑前面的 /)
-      const dirpath = new URL('.', uriString).pathname.replace(/^\/+/, '') // 獲取當前目錄路徑 (不包括路徑前面的 /)
-      const basename = filepath.slice(dirpath.length) // filepath - dirpath 得到文件名
+    const filepath = new URL(uriString).pathname.replace(/^\/+/, '') // 獲取文件路徑 (不包括路徑前面的 /)
+    const dirpath = new URL('.', uriString).pathname.replace(/^\/+/, '') // 獲取當前目錄路徑 (不包括路徑前面的 /)
+    const basename = filepath.slice(dirpath.length) // filepath - dirpath 得到文件名
 
+    try {
+      // TODO: should we cache it?
       const files = await this.ctx.webcontainer!.fs.readdir(dirpath, { withFileTypes: true }) // 讀取目錄內容
       const file = files.find(item => item.name === basename) // 查找文件
       if (!file)
         return undefined
-      if (file.isDirectory()) {
+      if (file.isFile()) {
         return {
-          type: 2 satisfies FileType.Directory, // 類型為目錄
+          type: 1 satisfies FileType.File,
+          size: 100,
+          ctime: Date.now(),
+          mtime: Date.now(),
+        }
+      }
+      else {
+        return {
+          type: 2 satisfies FileType.Directory,
           size: -1,
           ctime: -1,
           mtime: -1,
-        }
-      }
-      else if (file.isFile()) {
-        const content = await this.ctx.webcontainer!.fs.readFile(filepath, 'utf-8')
-        return {
-          type: 1 satisfies FileType.File, // 類型為文件
-          size: content.length,
-          ctime: Date.now(),
-          mtime: Date.now(),
         }
       }
     }
@@ -119,6 +119,7 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
   )
 
   disposeVue = () => {
+    worker?.dispose()
     disposeMarkers()
     disposeAutoInsertion()
     disposeProvides()
