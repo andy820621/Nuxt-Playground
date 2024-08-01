@@ -24,9 +24,9 @@
     "monaco-textmate": "^3.0.1",
     "monaco-volar": "^0.4.0",
     "onigasm": "^2.2.5",
-    "shikiji": "^0.9.3",
-    "shikiji-core": "^0.9.3",
-    "shikiji-monaco": "^0.9.3",
+    "shikiji": "^0.9.5",
+    "shikiji-core": "^0.9.5",
+    "shikiji-monaco": "^0.9.5",
     "splitpanes": "^3.1.5",
     "strip-json-comments": "5.0.1",
     "typescript": "^5.3.3",
@@ -62,6 +62,6 @@
     "vue-tsc": "^2.0.29"
   },
   "resolutions": {
-    "shikiji": "^0.9.3"
+    "shikiji": "^0.9.5"
   }
 }

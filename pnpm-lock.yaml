@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  shikiji: ^0.9.3
+  shikiji: ^0.9.5
 
 importers:
 
@@ -42,14 +42,14 @@ importers:
         specifier: ^2.2.5
         version: 2.2.5
       shikiji:
-        specifier: ^0.9.3
-        version: 0.9.3
+        specifier: ^0.9.5
+        version: 0.9.19
       shikiji-core:
-        specifier: ^0.9.3
-        version: 0.9.3
+        specifier: ^0.9.5
+        version: 0.9.19
       shikiji-monaco:
-        specifier: ^0.9.3
-        version: 0.9.3
+        specifier: ^0.9.5
+        version: 0.9.19
       splitpanes:
         specifier: ^3.1.5
         version: 3.1.5
@@ -4603,16 +4603,16 @@ packages:
   shiki@1.12.0:
     resolution: {integrity: sha512-BuAxWOm5JhRcbSOl7XCei8wGjgJJonnV0oipUupPY58iULxUGyHhW5CF+9FRMuM1pcJ5cGEJGll1LusX6FwpPA==}
 
-  shikiji-core@0.9.3:
-    resolution: {integrity: sha512-Khc/xyxUDAXit7QWA8QhtmuGSVdvpxooTathF+sYcsT52uKVH59GR2D48tMxQ8lnpW6Dx17TSZSE1ocRmhr6wQ==}
+  shikiji-core@0.9.19:
+    resolution: {integrity: sha512-AFJu/vcNT21t0e6YrfadZ+9q86gvPum6iywRyt1OtIPjPFe25RQnYJyxHQPMLKCCWA992TPxmEmbNcOZCAJclw==}
     deprecated: Shikiji is merged back to Shiki v1.0, please migrate over to get the latest updates
 
-  shikiji-monaco@0.9.3:
-    resolution: {integrity: sha512-6/4LyhUAT91XaOh/PVrKLQ7ddITYMEzcZQpXc2EGoLUDKy3DMpH7NtW0V64Wwd9gj9gAx9MirCd3E07IcyyYjw==}
+  shikiji-monaco@0.9.19:
+    resolution: {integrity: sha512-rTSjHavIjfJ7eb1Dapw0rR1Ybm3kOadO039PXjISmzvzZLoPmMJhJdu5r8WFVg7DWP1jYRi8eFPcbGhlAXra9w==}
     deprecated: Shikiji is merged back to Shiki v1.0, please migrate over to get the latest updates
 
-  shikiji@0.9.3:
-    resolution: {integrity: sha512-v1F/jlsEDjxVticC9IZ74vHOaLe6zpyXkv5sI/8mfZ0esoitDjVDoINP2Tmbsx9NZuX1gSvLfjbK2mqkPM1ViA==}
+  shikiji@0.9.19:
+    resolution: {integrity: sha512-Kw2NHWktdcdypCj1GkKpXH4o6Vxz8B8TykPlPuLHOGSV8VkhoCLcFOH4k19K4LXAQYRQmxg+0X/eM+m2sLhAkg==}
     deprecated: Shikiji is merged back to Shiki v1.0, please migrate over to get the latest updates
 
   signal-exit@3.0.7:
@@ -11157,15 +11157,15 @@ snapshots:
       '@shikijs/core': 1.12.0
       '@types/hast': 3.0.4
 
-  shikiji-core@0.9.3: {}
+  shikiji-core@0.9.19: {}
 
-  shikiji-monaco@0.9.3:
+  shikiji-monaco@0.9.19:
     dependencies:
-      shikiji-core: 0.9.3
+      shikiji-core: 0.9.19
 
-  shikiji@0.9.3:
+  shikiji@0.9.19:
     dependencies:
-      shikiji-core: 0.9.3
+      shikiji-core: 0.9.19
 
   signal-exit@3.0.7: {}
 
