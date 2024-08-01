@@ -37,37 +37,50 @@ export class WorkerHost {
 
   // 因為 WebContainer 不支持 fs.stat，所以使用 readdir 來檢查文件是否是目錄
   async fsStat(uriString: string) {
-    const filepath = new URL(uriString).pathname.replace(/^\/+/, '') // 獲取文件路徑 (不包括路徑前面的 /)
-    const dirpath = new URL('.', uriString).pathname.replace(/^\/+/, '') // 獲取當前目錄路徑 (不包括路徑前面的 /)
-    const basename = filepath.slice(dirpath.length) // filepath - dirpath 得到文件名
+    try {
+      const filepath = new URL(uriString).pathname.replace(/^\/+/, '') // 獲取文件路徑 (不包括路徑前面的 /)
+      const dirpath = new URL('.', uriString).pathname.replace(/^\/+/, '') // 獲取當前目錄路徑 (不包括路徑前面的 /)
+      const basename = filepath.slice(dirpath.length) // filepath - dirpath 得到文件名
 
-    const files = await this.ctx.webcontainer!.fs.readdir(dirpath, { withFileTypes: true }) // 讀取目錄內容
-    const file = files.find(item => item.name === basename) // 查找文件
-    if (!file)
-      return undefined
-    if (file.isDirectory()) {
-      return {
-        type: 2 satisfies FileType.Directory, // 類型為目錄
-        size: -1,
-        ctime: -1,
-        mtime: -1,
+      const files = await this.ctx.webcontainer!.fs.readdir(dirpath, { withFileTypes: true }) // 讀取目錄內容
+      const file = files.find(item => item.name === basename) // 查找文件
+      if (!file)
+        return undefined
+      if (file.isDirectory()) {
+        return {
+          type: 2 satisfies FileType.Directory, // 類型為目錄
+          size: -1,
+          ctime: -1,
+          mtime: -1,
+        }
+      }
+      else if (file.isFile()) {
+        const content = await this.ctx.webcontainer!.fs.readFile(filepath, 'utf-8')
+        return {
+          type: 1 satisfies FileType.File, // 類型為文件
+          size: content.length,
+          ctime: Date.now(),
+          mtime: Date.now(),
+        }
       }
     }
-    else if (file.isFile()) {
-      const content = await this.ctx.webcontainer!.fs.readFile(filepath, 'utf-8')
-      return {
-        type: 1 satisfies FileType.File, // 類型為文件
-        size: content.length,
-        ctime: Date.now(),
-        mtime: Date.now(),
-      }
+    catch (err) {
+      console.error(err);
+      // file not found
+      return undefined
     }
   }
 
   async fsReadDirectory(uri: string) {
-    const filepath = new URL(uri).pathname.replace(/^\/+/, '') // 解析文件路徑 (不包括路徑前面的 /)
-    const result = await this.ctx.webcontainer!.fs.readdir(filepath, { withFileTypes: true }) // 讀取目錄內容
-    return result.map(item => [item.name, item.isDirectory() ? 2 : 1]) as [string, 1 | 2][] // 返回文件名和類型
+    try {
+      const filepath = new URL(uri).pathname.replace(/^\/+/, '') // 解析文件路徑 (不包括路徑前面的 /)
+      const result = await this.ctx.webcontainer!.fs.readdir(filepath, { withFileTypes: true }) // 讀取目錄內容
+      return result.map(item => [item.name, item.isDirectory() ? 2 : 1]) as [string, 1 | 2][] // 返回文件名和類型
+    }
+    catch (err) {
+      console.error(err)
+      return []
+    }
   }
 }
 
@@ -84,11 +97,7 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
     } satisfies CreateData,
   })
   const languageId = ['vue', 'javascript', 'typescript']
-  const getSyncUris = () =>
-    ctx.files.map(file =>
-      Uri.parse(`file:///${file.filepath}`), // 將文件路徑轉換為 URI
-    )
-
+  const getSyncUris = () => ctx.files.map(file => Uri.parse(`file:///${file.filepath}`))  // 將文件路徑轉換為 URI
   const { dispose: disposeMarkers } = volar.editor.activateMarkers( // 啟用標記
     worker,
     languageId,
