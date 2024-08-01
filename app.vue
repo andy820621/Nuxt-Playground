@@ -7,5 +7,5 @@ import './styles/prose.css'
 </script>
 
 <template>
-  <NuxtPage />
+  <NuxtPage page-key="playground" />
 </template>
