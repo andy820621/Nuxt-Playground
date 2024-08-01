@@ -30,13 +30,14 @@ export default defineNuxtModule({
         await Promise.all(
           files.map(async (filename) => {
             try {
-              const content = await fs.readFile(filename, 'utf-8');
-              filesMap[relative(dir, filename)] = content;
-            } catch (err) {
-              console.error(`Error reading file ${filename}:`, err);
+              const content = await fs.readFile(filename, 'utf-8')
+              filesMap[relative(dir, filename)] = content
             }
-          })
-        );
+            catch (err) {
+              console.error(`Error reading file ${filename}:`, err)
+            }
+          }),
+        )
 
         return `export default ${JSON.stringify(filesMap)}`
       },

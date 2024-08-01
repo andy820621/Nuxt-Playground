@@ -111,7 +111,6 @@ function navigate() {
       </VDropdown>
     </div>
 
-
     <div relative h-full w-full>
       <PanelPreviewLoading />
       <PanelPreviewClient ref="inner" />
