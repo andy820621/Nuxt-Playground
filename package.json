@@ -24,9 +24,9 @@
     "monaco-textmate": "^3.0.1",
     "monaco-volar": "^0.4.0",
     "onigasm": "^2.2.5",
-    "shikiji": "^0.9.5",
-    "shikiji-core": "^0.9.5",
-    "shikiji-monaco": "^0.9.5",
+    "shikiji": "^0.9.10",
+    "shikiji-core": "^0.9.10",
+    "shikiji-monaco": "^0.9.10",
     "splitpanes": "^3.1.5",
     "strip-json-comments": "5.0.1",
     "typescript": "^5.3.3",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.0",
-    "@iconify/json": "^2.2.232",
+    "@iconify/json": "^2.2.233",
     "@nuxt/content": "^2.13.2",
     "@nuxt/devtools": "^1.3.9",
     "@nuxt/image": "^1.7.0",
@@ -62,6 +62,6 @@
     "vue-tsc": "^2.0.29"
   },
   "resolutions": {
-    "shikiji": "^0.9.5"
+    "shikiji": "^0.9.10"
   }
 }
