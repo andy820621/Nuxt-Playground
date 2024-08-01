@@ -60,5 +60,8 @@
     "unocss": "^0.61.7",
     "vue": "latest",
     "vue-tsc": "^2.0.29"
+  },
+  "resolutions": {
+    "shikiji": "^0.9.3"
   }
 }
