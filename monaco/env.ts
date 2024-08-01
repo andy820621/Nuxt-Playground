@@ -2,31 +2,18 @@ import * as volar from '@volar/monaco'
 import { Uri, editor, languages } from 'monaco-editor'
 import * as onigasm from 'onigasm' // 引入 onigasm，用於語法高亮
 import onigasmWasm from 'onigasm/lib/onigasm.wasm?url' // 引入 onigasm 的 wasm 文件
-import type { WebContainer } from '@webcontainer/api'
 import { getOrCreateModel } from './utils'
 import type { CreateData } from './vue.worker'
 import type { FileType } from './types'
 
-// TODO: refactor this out
-export class Store {
-  constructor(
-    public ws: WebContainer,
-  ) {}
-
-  state = {
-    typescriptVersion: '5.3.3',
-    files: [] as string[],
-  }
-
-  vueVersion = '3.3.10'
-}
+export type PlaygroundMonacoContext = Pick<PlaygroundStore, 'webcontainer' | 'files'>
 
 export function loadWasm() {
   return onigasm.loadWASM(onigasmWasm)
 }
 
 export class WorkerHost {
-  constructor(private store: Store) {}
+  constructor(private ctx: PlaygroundMonacoContext) {}
 
   // 從 CDN 獲取文件內容並創建或更新模型
   onFetchCdnFile(uri: string, content: string) {
@@ -37,7 +24,7 @@ export class WorkerHost {
   async fsReadFile(uri: string, encoding = 'utf-8') {
     try {
       const filepath = new URL(uri).pathname.replace(/^\/+/, '') // 解析文件路徑(不包括路徑前面的 /)
-      const content = await this.store.ws.fs.readFile(filepath, encoding as 'utf-8') // 讀取文件內容
+      const content = await this.ctx.webcontainer!.fs.readFile(filepath, encoding as 'utf-8') // 讀取文件內容
       if (content != null)
         getOrCreateModel(Uri.parse(uri), undefined, content) // 創建或更新模型
       return content
@@ -54,7 +41,7 @@ export class WorkerHost {
     const dirpath = new URL('.', uriString).pathname.replace(/^\/+/, '') // 獲取當前目錄路徑 (不包括路徑前面的 /)
     const basename = filepath.slice(dirpath.length) // filepath - dirpath 得到文件名
 
-    const files = await this.store.ws.fs.readdir(dirpath, { withFileTypes: true }) // 讀取目錄內容
+    const files = await this.ctx.webcontainer!.fs.readdir(dirpath, { withFileTypes: true }) // 讀取目錄內容
     const file = files.find(item => item.name === basename) // 查找文件
     if (!file)
       return undefined
@@ -67,7 +54,7 @@ export class WorkerHost {
       }
     }
     else if (file.isFile()) {
-      const content = await this.store.ws.fs.readFile(filepath, 'utf-8')
+      const content = await this.ctx.webcontainer!.fs.readFile(filepath, 'utf-8')
       return {
         type: 1 satisfies FileType.File, // 類型為文件
         size: content.length,
@@ -79,30 +66,29 @@ export class WorkerHost {
 
   async fsReadDirectory(uri: string) {
     const filepath = new URL(uri).pathname.replace(/^\/+/, '') // 解析文件路徑 (不包括路徑前面的 /)
-    const result = await this.store.ws.fs.readdir(filepath, { withFileTypes: true }) // 讀取目錄內容
+    const result = await this.ctx.webcontainer!.fs.readdir(filepath, { withFileTypes: true }) // 讀取目錄內容
     return result.map(item => [item.name, item.isDirectory() ? 2 : 1]) as [string, 1 | 2][] // 返回文件名和類型
   }
 }
 
 let disposeVue: undefined | (() => void) // 定義一個變量，用於存儲 Vue 語言工具的釋放函數
-export async function reloadLanguageTools(store: Store) {
+export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
   disposeVue?.() // 如果存在舊的釋放函數，則調用它
 
   const worker = editor.createWebWorker<any>({
     moduleId: 'vs/language/vue/vueWorker',
     label: 'vue',
-    host: new WorkerHost(store),
+    host: new WorkerHost(ctx),
     createData: {
       tsconfig: {},
     } satisfies CreateData,
   })
   const languageId = ['vue', 'javascript', 'typescript']
-  const getSyncUris = () => { // 定義一個函數，用於獲取同步的 URI
-    const files = store.state.files.map(filename =>
-      Uri.parse(`file:///${filename}`), // 標準化路徑表示
+  const getSyncUris = () =>
+    ctx.files.map(file =>
+      Uri.parse(`file:///${file.filepath}`), // 將文件路徑轉換為 URI
     )
-    return files
-  }
+
   const { dispose: disposeMarkers } = volar.editor.activateMarkers( // 啟用標記
     worker,
     languageId,
@@ -128,10 +114,4 @@ export async function reloadLanguageTools(store: Store) {
     disposeAutoInsertion()
     disposeProvides()
   }
-}
-
-export interface WorkerMessage {
-  event: 'init'
-  tsVersion: string
-  tsLocale?: string
 }

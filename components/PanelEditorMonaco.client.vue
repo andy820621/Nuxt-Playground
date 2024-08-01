@@ -2,7 +2,7 @@
 import * as monaco from 'monaco-editor'
 import { loadGrammars } from 'monaco-volar'
 import { initMonaco } from '../monaco/setup'
-import { Store, reloadLanguageTools } from '~/monaco/env'
+import { reloadLanguageTools } from '~/monaco/env'
 
 const props = defineProps<{
   modelValue: string
@@ -14,15 +14,7 @@ const emit = defineEmits<{
   (event: 'change', value: string): void
 }>()
 const play = usePlaygroundStore()
-const store = new Store(play.webcontainer!)
-
-// TODO: refactor this out
-watchEffect(() => {
-  store.state.files = play.files.map(i => i.filepath)
-  // console.log(store.state.files)
-})
-
-initMonaco(store)
+initMonaco(play)
 
 const el = ref<HTMLDivElement | null>(null)
 
@@ -124,7 +116,7 @@ watch(
       () => play.status,
       (s) => {
         if (s === 'start')
-          reloadLanguageTools(store)
+          reloadLanguageTools(play)
       },
     )
 

@@ -14,9 +14,8 @@ import themeLight from 'theme-vitesse/themes/vitesse-light.json'
 
 import vueWorker from './vue.worker?worker'
 import { loadWasm, reloadLanguageTools } from './env'
-import type { Store } from './env'
 
-export function initMonaco(store: Store) {
+export function initMonaco(ctx: PlaygroundStore) {
   self.MonacoEnvironment = {
     async getWorker(_: any, label: string) {
       switch (label) {
@@ -86,7 +85,7 @@ export function initMonaco(store: Store) {
   monaco.editor.defineTheme('theme-dark', themeDark as any)
 
   monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true)
-  monaco.languages.onLanguage('vue', () => reloadLanguageTools(store))
+  monaco.languages.onLanguage('vue', () => reloadLanguageTools(ctx))
 
   loadWasm()
 }
