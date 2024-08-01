@@ -17,10 +17,8 @@ export class WorkerHost {
     try {
       const filepath = withoutLeadingSlash(uri.fsPath)
       const content = await this.ctx.webcontainer!.fs.readFile(filepath, encoding as 'utf-8')
-      if (content != null) {
-        // console.log('readFile', uriString)
+      if (content != null)
         getOrCreateModel(uri, undefined, content)
-      }
       return content
     }
     catch (err) {
@@ -59,7 +57,7 @@ export class WorkerHost {
       }
     }
     catch (err) {
-      console.error(err);
+      console.error(err)
       // file not found
       return undefined
     }
@@ -116,7 +114,6 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
   // `include` and `exclude` are not supported.
   const extraFiles = await loadFiles(ctx, ['.nuxt/nuxt.d.ts'])
 
-
   const worker = editor.createWebWorker<any>({
     moduleId: 'vs/language/vue/vueWorker',
     label: 'vue',
@@ -129,7 +126,7 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
   const getSyncUris = () => [ // 將文件路徑轉換為 URI
     ...ctx.files.map(file => Uri.parse(`file:///${file.filepath}`)),
     ...extraFiles,
-  ]  
+  ]
   const { dispose: disposeMarkers } = volar.editor.activateMarkers( // 啟用標記
     worker,
     languageId,
@@ -174,6 +171,6 @@ function loadFiles(ctx: PlaygroundMonacoContext, files: string[]) {
     .then(uris => uris.filter(Boolean))
 }
 
-function withoutLeadingSlash(path: string) { 
+function withoutLeadingSlash(path: string) {
   return path.replace(/^\/+/, '') // 解析文件路徑(不包括路徑前面的 /)
 }
