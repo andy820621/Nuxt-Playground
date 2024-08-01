@@ -1,3 +1,4 @@
+import { basename, dirname } from 'pathe'
 import * as volar from '@volar/monaco'
 import { Uri, editor, languages } from 'monaco-editor-core'
 import * as onigasm from 'onigasm' // 引入 onigasm，用於語法高亮
@@ -15,18 +16,14 @@ export function loadWasm() {
 export class WorkerHost {
   constructor(private ctx: PlaygroundMonacoContext) {}
 
-  // 從 CDN 獲取文件內容並創建或更新模型
-  onFetchCdnFile(uri: string, content: string) {
-    return getOrCreateModel(Uri.parse(uri), undefined, content)
-  }
-
   // 讀取文件系統中的文件內容
-  async fsReadFile(uri: string, encoding = 'utf-8') {
+  async fsReadFile(uriString: string, encoding = 'utf-8') {
+    const uri = Uri.parse(uriString)
     try {
-      const filepath = new URL(uri).pathname.replace(/^\/+/, '') // 解析文件路徑(不包括路徑前面的 /)
-      const content = await this.ctx.webcontainer!.fs.readFile(filepath, encoding as 'utf-8') // 讀取文件內容
+      const filepath = withoutLeadingSlash(uri.fsPath)
+      const content = await this.ctx.webcontainer!.fs.readFile(filepath, encoding as 'utf-8')
       if (content != null)
-        getOrCreateModel(Uri.parse(uri), undefined, content) // 創建或更新模型
+        getOrCreateModel(uri, undefined, content)
       return content
     }
     catch (err) {
@@ -37,14 +34,14 @@ export class WorkerHost {
 
   // 因為 WebContainer 不支持 fs.stat，所以使用 readdir 來檢查文件是否是目錄
   async fsStat(uriString: string) {
-    const filepath = new URL(uriString).pathname.replace(/^\/+/, '') // 獲取文件路徑 (不包括路徑前面的 /)
-    const dirpath = new URL('.', uriString).pathname.replace(/^\/+/, '') // 獲取當前目錄路徑 (不包括路徑前面的 /)
-    const basename = filepath.slice(dirpath.length) // filepath - dirpath 得到文件名
+    const uri = Uri.parse(uriString)
+    const dir = withoutLeadingSlash(dirname(uri.fsPath))
+    const base = basename(uri.fsPath)
 
     try {
       // TODO: should we cache it?
-      const files = await this.ctx.webcontainer!.fs.readdir(dirpath, { withFileTypes: true }) // 讀取目錄內容
-      const file = files.find(item => item.name === basename) // 查找文件
+      const files = await this.ctx.webcontainer!.fs.readdir(dir, { withFileTypes: true })
+      const file = files.find(item => item.name === base)
       if (!file)
         return undefined
       if (file.isFile()) {
@@ -71,10 +68,11 @@ export class WorkerHost {
     }
   }
 
-  async fsReadDirectory(uri: string) {
+  async fsReadDirectory(uriString: string) {
+    const uri = Uri.parse(uriString)
     try {
-      const filepath = new URL(uri).pathname.replace(/^\/+/, '') // 解析文件路徑 (不包括路徑前面的 /)
-      const result = await this.ctx.webcontainer!.fs.readdir(filepath, { withFileTypes: true }) // 讀取目錄內容
+      const filepath = withoutLeadingSlash(uri.fsPath)
+      const result = await this.ctx.webcontainer!.fs.readdir(filepath, { withFileTypes: true })
       return result.map(item => [item.name, item.isDirectory() ? 2 : 1]) as [string, 1 | 2][] // 返回文件名和類型
     }
     catch (err) {
@@ -124,4 +122,8 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
     disposeAutoInsertion()
     disposeProvides()
   }
+}
+
+function withoutLeadingSlash(path: string) { 
+  return path.replace(/^\/+/, '') // 解析文件路徑(不包括路徑前面的 /)
 }
