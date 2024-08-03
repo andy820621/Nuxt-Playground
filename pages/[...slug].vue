@@ -2,11 +2,20 @@
 const router = useRouter()
 const play = usePlaygroundStore()
 
+const templatesMap = Object.fromEntries(
+  Object.entries(import.meta.glob('~/content/**/.template/index.ts'))
+    .map(([key, loader]) => [
+      key
+        .replace(/^\/content/, '') // 刪除路徑開頭的 `/content`
+        .replace(/\/\.template\/index\.ts$/, '') // 刪除路徑結尾的 `.template/index.ts`
+        .replace(/\/\d+\./g, '/'), // 將路徑中的所有 `/數字.` 替換為 `/`
+      loader,
+    ]),
+)
+
 async function mount(path: string) {
-  if (path === '/views/app-vue')
-    play.mountGuide(await import('~/content/views/1.app-vue/index').then(m => m.meta))
-  else if (path === '/views/routing')
-    play.mountGuide(await import('~/content/views/3.routing/index').then(m => m.meta))
+  if (templatesMap[path])
+    play.mountGuide(await templatesMap[path]().then((m: any) => m.meta))
   else
     play.mountGuide() // unmount previous guide
 }
