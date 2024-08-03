@@ -3,7 +3,6 @@ import fs from 'node:fs/promises'
 import { addTemplate, addVitePlugin, defineNuxtModule } from '@nuxt/kit' // 用於定義 Nuxt 模組和添加模板
 import fg from 'fast-glob' // 用於匹配檔案模式
 import { relative, resolve } from 'pathe' // 用於計算相對路徑
-import { meta } from './../content/views/1.app-vue/index'
 
 export default defineNuxtModule({
   meta: {
