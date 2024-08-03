@@ -5,7 +5,7 @@
 
   // Auto fix
   "editor.codeActionsOnSave": {
-    // "source.fixAll.eslint": "explicit", // ? Don't know why enabling it will make saving the file slow.
+    "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
 

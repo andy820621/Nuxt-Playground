@@ -5,7 +5,7 @@
   "packageManager": "pnpm@9.6.0",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev -o --host",
+    "dev": "nuxt dev -o",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "typecheck": "nuxt typecheck",
@@ -36,7 +36,7 @@
     "@antfu/eslint-config": "^2.24.0",
     "@iconify/json": "^2.2.233",
     "@nuxt/content": "^2.13.2",
-    "@nuxt/devtools": "^1.3.9",
+    "@nuxt/devtools": "^1.0.5",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.2",
     "@pinia/nuxt": "^0.5.2",

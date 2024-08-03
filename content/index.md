@@ -20,8 +20,9 @@ The [installation of Nuxt](https://nuxt.com/docs/getting-started/installation) i
 
 Here are different sections of this tutorial:
 
+- [Views](/views/app-vue)
 - Styling
-- Routing
+- [Routing](/views/routing)
 - Data Fetching
 - State Management
 - Server

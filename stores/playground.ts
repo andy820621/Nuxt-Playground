@@ -1,7 +1,9 @@
 import type { Raw } from 'vue'
 import type { WebContainer, WebContainerProcess } from '@webcontainer/api'
-import type { VirtualFile } from '../structures/VirtualFile'
+import { dirname } from 'pathe'
+import { VirtualFile } from '../structures/VirtualFile'
 import type { ClientInfo } from '~/types/rpc'
+import type { GuideMeta } from '~/types/guides'
 
 export const PlaygroundStatusOrder = [
   'init',
@@ -16,9 +18,11 @@ export const usePlaygroundStore = defineStore('playground', () => {
   const status = ref<PlaygroundStatus>('init')
   const error = shallowRef<{ message: string }>() // 用於存儲錯誤信息
   const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>() // 當前運行的進程
-  const files = shallowRef<Raw<VirtualFile>[]>([]) // 存儲虛擬文件列表
+  const files = shallowReactive<Raw<Map<string, VirtualFile>>>(new Map()) // 存儲虛擬文件列表
   const webcontainer = shallowRef<Raw<WebContainer>>() // WebContainer 實例
   const clientInfo = ref<ClientInfo>()
+  const fileSelected = shallowRef<Raw<VirtualFile>>()
+  const mountedGuide = shallowRef<Raw<GuideMeta>>()
 
   const previewLocation = ref({
     origin: '',
@@ -31,6 +35,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
   }
 
   const colorMode = useColorMode()
+  let mountPromise: Promise<void> | undefined
 
   // 在客戶端側掛載 playground
   if (import.meta.client) {
@@ -49,7 +54,11 @@ export const usePlaygroundStore = defineStore('playground', () => {
         .then(({ WebContainer }) => WebContainer.boot()) // 啟動 WebContainer
 
       webcontainer.value = wc // 存儲 WebContainer 實例
-      files.value = _files // 存儲文件列表
+      // 存儲文件列表
+      _files.forEach((file) => {
+        files.set(file.filepath, file)
+        file.wc = wc
+      })
 
       _files.forEach((file) => { // 為每個文件添加 WebContainer 引用
         file.wc = wc
@@ -85,7 +94,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
       }
     }
 
-    /* #__PURE__ */ mount() // 立即執行 mount 函數
+    mountPromise = mount()
   }
 
   let abortController: AbortController | undefined // 用於中止操作的控制器
@@ -202,18 +211,77 @@ export const usePlaygroundStore = defineStore('playground', () => {
     URL.revokeObjectURL(url)
   }
 
+  const guideDispose: (() => void | Promise<void>)[] = [] // 用於存儲每個 guide 的釋放函數
+
+  async function mountGuide(guide?: GuideMeta) {
+    await mountPromise
+
+    // Unmount the old guide
+    await Promise.all(guideDispose.map(dispose => dispose()))
+    guideDispose.length = 0 // 清空釋放函數列表
+
+    if (guide) {
+      // Mount the new guide
+      // eslint-disable-next-line no-console
+      console.log('mounting guide', guide)
+
+      await Promise.all(
+        Object.entries(guide?.files || {})
+          .map(async ([filepath, content]) => {
+            await webcontainer.value?.fs.mkdir(dirname(filepath), { recursive: true })
+            await updateOrCreateFile(filepath, content)
+          }),
+      )
+    }
+
+    // if (status.value === 're
+    previewLocation.value.fullPath = guide?.startingUrl || '/'
+    fileSelected.value = files.get(guide?.startingFile || 'app.vue')
+    updatePreviewUrl()
+
+    mountedGuide.value = guide
+
+    // TODO: trigger a editor update
+    return undefined
+
+    async function updateOrCreateFile(filepath: string, content: string) {
+      const file = files.get(filepath)
+      if (file) {
+        const oldContent = file.read()
+        await file.write(content)
+        guideDispose.push(async () => {
+          await file.write(oldContent)
+        })
+        return file
+      }
+      else {
+        const newFile = new VirtualFile(filepath, content, webcontainer.value)
+        await newFile.write(content)
+        files.set(filepath, newFile)
+        guideDispose.push(async () => {
+          files.delete(filepath)
+          await webcontainer.value!.fs.rm(filepath)
+        })
+        return newFile
+      }
+    }
+  }
+
   return { // 返回 store 的公共接口
-    status,
-    error,
-    currentProcess,
-    files,
     webcontainer,
-    previewUrl,
     updatePreviewUrl,
-    previewLocation,
-    clientInfo,
+    status,
     restartServer: startServer,
+    previewUrl,
+    previewLocation,
+    mountGuide,
+    mountedGuide,
+    fileSelected,
+    files,
+    error,
     downloadZip,
+    currentProcess,
+    clientInfo,
   }
 })
 

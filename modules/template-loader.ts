@@ -1,8 +1,9 @@
 import { fileURLToPath } from 'node:url' // 將 URL 轉換為檔案路徑
 import fs from 'node:fs/promises'
-import { addTemplate, defineNuxtModule } from '@nuxt/kit' // 用於定義 Nuxt 模組和添加模板
+import { addTemplate, addVitePlugin, defineNuxtModule } from '@nuxt/kit' // 用於定義 Nuxt 模組和添加模板
 import fg from 'fast-glob' // 用於匹配檔案模式
-import { relative } from 'pathe' // 用於計算相對路徑
+import { relative, resolve } from 'pathe' // 用於計算相對路徑
+import { meta } from './../content/views/1.app-vue/index'
 
 export default defineNuxtModule({
   meta: {
@@ -40,6 +41,46 @@ export default defineNuxtModule({
         )
 
         return `export default ${JSON.stringify(filesMap)}`
+      },
+    })
+
+    const MAGIC_COMMENT = '// #generate-files-for-meta'
+
+    addVitePlugin({
+      name: 'nuxt-playground:template-loader',
+      enforce: 'pre',
+      async transform(code, id) {
+        if (!code.includes(MAGIC_COMMENT))
+          return
+
+        const filesDirs = resolve(id, '../files')
+        const files = await fg('**/*.*', {
+          cwd: filesDirs,
+          dot: true,
+          onlyFiles: true,
+          absolute: false,
+          ignore: [
+            '**/node_modules/**',
+            '**/.git/**',
+            '**/.nuxt/**',
+          ],
+        })
+
+        const filesMap: Record<string, string> = {}
+
+        await Promise.all(
+          files.sort().map(async (filename) => {
+            try {
+              const content = await fs.readFile(resolve(filesDirs, filename), 'utf-8')
+              filesMap[filename] = content
+            }
+            catch (err) {
+              console.error(`Error reading file ${filename}:`, err)
+            }
+          }),
+        )
+
+        return code.replace(MAGIC_COMMENT, `meta.files = ${JSON.stringify(filesMap)}`)
       },
     })
   },

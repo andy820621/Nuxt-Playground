@@ -124,7 +124,7 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
   })
   const languageId = ['vue', 'javascript', 'typescript']
   const getSyncUris = () => [ // 將文件路徑轉換為 URI
-    ...ctx.files.map(file => Uri.parse(`file:///${file.filepath}`)),
+    ...Array.from(ctx.files.values()).map(file => Uri.parse(`file:///${file.filepath}`)),
     ...extraFiles,
   ]
   const { dispose: disposeMarkers } = volar.editor.activateMarkers( // 啟用標記

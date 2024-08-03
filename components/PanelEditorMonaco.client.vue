@@ -66,6 +66,16 @@ function getModel(filepath: string) {
 }
 
 watch(
+  () => props.modelValue,
+  (value) => {
+    if (!el.value)
+      return
+    getModel(props.filepath).setValue(value)
+  },
+  { immediate: true },
+)
+
+watch(
   el,
   async (value) => {
     if (!value)
@@ -73,7 +83,6 @@ watch(
 
     const shiki = await getShikiji()
     shikijiToMonaco(shiki, monaco)
-
 
     const editor = monaco.editor.create(
       value,
