@@ -43,13 +43,11 @@ export default defineNuxtModule({
       },
     })
 
-    const MAGIC_COMMENT = '// #generate-files-for-meta'
-
     addVitePlugin({
       name: 'nuxt-playground:template-loader',
       enforce: 'pre',
       async transform(code, id) {
-        if (!code.includes(MAGIC_COMMENT))
+        if (!id.match(/\/\.template\/index\.ts/))
           return
 
         const filesDirs = resolve(id, '../files')
@@ -79,7 +77,7 @@ export default defineNuxtModule({
           }),
         )
 
-        return code.replace(MAGIC_COMMENT, `meta.files = ${JSON.stringify(filesMap)}`)
+        return `${code}\nmeta.files = ${JSON.stringify(filesMap)}\n`
       },
     })
   },
