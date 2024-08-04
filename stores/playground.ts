@@ -10,9 +10,13 @@ export const PlaygroundStatusOrder = [
   'mount',
   'install',
   'start',
+  'polling',
   'ready',
+  'interactive',
 ] as const
 export type PlaygroundStatus = typeof PlaygroundStatusOrder[number] | 'error'
+
+const NUXT_PORT = 4000
 
 export const usePlaygroundStore = defineStore('playground', () => {
   const status = ref<PlaygroundStatus>('init')
@@ -23,6 +27,8 @@ export const usePlaygroundStore = defineStore('playground', () => {
   const clientInfo = ref<ClientInfo>()
   const fileSelected = shallowRef<Raw<VirtualFile>>()
   const mountedGuide = shallowRef<Raw<GuideMeta>>()
+
+  const INSTALL_MANAGER = 'pnpm'
 
   const previewLocation = ref({
     origin: '',
@@ -36,6 +42,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
   const colorMode = useColorMode()
   let mountPromise: Promise<void> | undefined
+  let hasInstalled = false
 
   // 在客戶端側掛載 playground
   if (import.meta.client) {
@@ -66,14 +73,14 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
       wc.on('server-ready', async (port, url) => {
         // Nuxt 監聽多個端口，'server-ready' 會為每個端口觸發，我們需要專注於主要的那個
-        if (port === 3000) {
+        if (port === NUXT_PORT) {
           previewLocation.value = {
             origin: url,
             fullPath: '/',
           }
         }
 
-        status.value = 'start'
+        status.value = 'polling'
       })
 
       wc.on('error', (err) => {
@@ -106,7 +113,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
     currentProcess.value = undefined
   }
 
-  async function startServer() {
+  async function startServer(reinstall = false) {
     if (!import.meta.client) // 如果不是客戶端，直接返回
       return
 
@@ -116,14 +123,26 @@ export const usePlaygroundStore = defineStore('playground', () => {
     abortController = new AbortController() // 創建新的用於中止操作的控制器
     const signal = abortController.signal // 獲取中止信號
 
-    await launchDefaultProcess(wc, signal)
+    if (reinstall)
+      hasInstalled = false
+
+    if (!hasInstalled)
+      await launchInstallProcess(wc, signal)
+
+    if (hasInstalled)
+      await launchNuxtProcess(wc, signal)
+
     await launchInteractiveProcess(wc, signal)
   }
 
   async function spawn(wc: WebContainer, command: string, args: string[] = []) { // 生成新進程
     if (currentProcess.value)
       throw new Error('A process is already running')
-    const process = await wc.spawn(command, args)
+    const process = await wc.spawn(command, args, {
+      env: {
+        NUXT_PORT: NUXT_PORT.toString(),
+      },
+    })
     currentProcess.value = process
     return process.exit.then((r) => {
       if (currentProcess.value === process)
@@ -132,35 +151,40 @@ export const usePlaygroundStore = defineStore('playground', () => {
     })
   }
 
-  async function launchDefaultProcess(wc: WebContainer, signal: AbortSignal) { // 啟動默認進程
-    if (!wc)
+  async function launchInstallProcess(wc: WebContainer, signal: AbortSignal) { // 啟動默認進程
+    if (signal.aborted)
       return
 
     status.value = 'install'
 
-    if (signal.aborted)
-      return
-
-    const installManager = 'pnpm'
-    const installExitCode = await spawn(wc, installManager, ['install']) // 執行 install
+    const installExitCode = await spawn(wc, INSTALL_MANAGER, ['install']) // 執行 install
     if (signal.aborted)
       return
 
     if (installExitCode !== 0) { // 如果安裝失敗
       status.value = 'error'
       error.value = {
-        message: `Unable to run ${installManager} install, exit as ${installExitCode}`,
+        message: `Unable to run ${INSTALL_MANAGER} install, exit as ${installExitCode}`,
       }
-      console.error(`Unable to run ${installManager} install`)
-      return
+      console.error(`Unable to run ${INSTALL_MANAGER} install`)
+      return false
     }
 
-    await spawn(wc, installManager, ['run', 'dev', '--no-qr']) // 運行開發服務器
+    hasInstalled = true
+  }
+
+  async function launchNuxtProcess(wc: WebContainer, signal: AbortSignal) {
+    if (signal.aborted)
+      return
+    status.value = 'start'
+
+    await spawn(wc, INSTALL_MANAGER, ['run', 'dev', '--no-qr']) // 運行開發服務器
   }
 
   async function launchInteractiveProcess(wc: WebContainer, signal: AbortSignal) { // 啟動交互式進程
     if (signal.aborted)
       return
+    status.value = 'interactive'
     await spawn(wc, 'jsh') // 啟動 jsh
   }
 
@@ -234,7 +258,6 @@ export const usePlaygroundStore = defineStore('playground', () => {
       )
     }
 
-    // if (status.value === 're
     previewLocation.value.fullPath = guide?.startingUrl || '/'
     fileSelected.value = files.get(guide?.startingFile || 'app.vue')
     updatePreviewUrl()
