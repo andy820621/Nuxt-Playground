@@ -120,7 +120,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
       ui.showTerminal = true
     else if (features.value.terminal === false)
       ui.showTerminal = false
-  }, { immediate: true })
+  })
 
   let abortController: AbortController | undefined // 用於中止操作的控制器
 
