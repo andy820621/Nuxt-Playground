@@ -3,7 +3,7 @@ import type { WebContainer, WebContainerProcess } from '@webcontainer/api'
 import { dirname } from 'pathe'
 import { VirtualFile } from '../structures/VirtualFile'
 import type { ClientInfo } from '~/types/rpc'
-import type { GuideMeta } from '~/types/guides'
+import type { GuideMeta, PlaygroundFeatures } from '~/types/guides'
 
 export const PlaygroundStatusOrder = [
   'init',
@@ -19,6 +19,8 @@ export type PlaygroundStatus = typeof PlaygroundStatusOrder[number] | 'error'
 const NUXT_PORT = 4000
 
 export const usePlaygroundStore = defineStore('playground', () => {
+  const ui = useUiState()
+
   const status = ref<PlaygroundStatus>('init')
   const error = shallowRef<{ message: string }>() // 用於存儲錯誤信息
   const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>() // 當前運行的進程
@@ -27,6 +29,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
   const clientInfo = ref<ClientInfo>()
   const fileSelected = shallowRef<Raw<VirtualFile>>()
   const mountedGuide = shallowRef<Raw<GuideMeta>>()
+  const features = ref<PlaygroundFeatures>({})
 
   const INSTALL_MANAGER = 'pnpm'
 
@@ -103,6 +106,21 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
     mountPromise = mount()
   }
+
+  watch(features, () => {
+    if (features.value.fileTree) {
+      if (ui.panelFileTree <= 0)
+        ui.panelFileTree = 20
+    }
+    else if (features.value.fileTree === false) {
+      ui.panelFileTree = 0
+    }
+
+    if (features.value.terminal)
+      ui.showTerminal = true
+    else if (features.value.terminal === false)
+      ui.showTerminal = false
+  }, { immediate: true })
 
   let abortController: AbortController | undefined // 用於中止操作的控制器
 
@@ -247,7 +265,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
     if (guide) {
       // Mount the new guide
       // eslint-disable-next-line no-console
-      console.log('mounting guide', guide)
+      console.log('nowww mounting guide', guide)
 
       await Promise.all(
         Object.entries(guide?.files || {})
@@ -256,6 +274,11 @@ export const usePlaygroundStore = defineStore('playground', () => {
             await updateOrCreateFile(filepath, content)
           }),
       )
+
+      features.value = guide.features || {}
+    }
+    else {
+      features.value = {}
     }
 
     previewLocation.value.fullPath = guide?.startingUrl || '/'
@@ -305,6 +328,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
     downloadZip,
     currentProcess,
     clientInfo,
+    features,
   }
 })
 
