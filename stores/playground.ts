@@ -21,15 +21,16 @@ const NUXT_PORT = 4000
 export const usePlaygroundStore = defineStore('playground', () => {
   const ui = useUiState()
 
+  const webcontainer = shallowRef<Raw<WebContainer>>()
   const status = ref<PlaygroundStatus>('init')
-  const error = shallowRef<{ message: string }>() // 用於存儲錯誤信息
-  const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>() // 當前運行的進程
-  const files = shallowReactive<Raw<Map<string, VirtualFile>>>(new Map()) // 存儲虛擬文件列表
-  const webcontainer = shallowRef<Raw<WebContainer>>() // WebContainer 實例
-  const clientInfo = ref<ClientInfo>()
-  const fileSelected = shallowRef<Raw<VirtualFile>>()
+  const showingSolution = ref(false)
   const mountedGuide = shallowRef<Raw<GuideMeta>>()
+  const fileSelected = shallowRef<Raw<VirtualFile>>()
+  const files = shallowReactive<Raw<Map<string, VirtualFile>>>(new Map()) // 存儲虛擬文件列表
   const features = ref<PlaygroundFeatures>({})
+  const error = shallowRef<{ message: string }>()
+  const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>()
+  const clientInfo = ref<ClientInfo>()
 
   const INSTALL_MANAGER = 'pnpm'
 
@@ -255,40 +256,14 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
   const guideDispose: (() => void | Promise<void>)[] = [] // 用於存儲每個 guide 的釋放函數
 
-  async function mountGuide(guide?: GuideMeta) {
-    await mountPromise
-
-    // Unmount the old guide
-    await Promise.all(guideDispose.map(dispose => dispose()))
-    guideDispose.length = 0 // 清空釋放函數列表
-
-    if (guide) {
-      // Mount the new guide
-      // eslint-disable-next-line no-console
-      console.log('nowww mounting guide', guide)
-
-      await Promise.all(
-        Object.entries(guide?.files || {})
-          .map(async ([filepath, content]) => {
-            await webcontainer.value?.fs.mkdir(dirname(filepath), { recursive: true })
-            await updateOrCreateFile(filepath, content)
-          }),
-      )
-
-      features.value = guide.features || {}
-    }
-    else {
-      features.value = {}
-    }
-
-    previewLocation.value.fullPath = guide?.startingUrl || '/'
-    fileSelected.value = files.get(guide?.startingFile || 'app.vue')
-    updatePreviewUrl()
-
-    mountedGuide.value = guide
-
-    // TODO: trigger a editor update
-    return undefined
+  async function _mountFiles(overrides: Record<string, string>) {
+    await Promise.all(
+      Object.entries(overrides)
+        .map(async ([filepath, content]) => {
+          await webcontainer.value?.fs.mkdir(dirname(filepath), { recursive: true })
+          await updateOrCreateFile(filepath, content)
+        }),
+    )
 
     async function updateOrCreateFile(filepath: string, content: string) {
       const file = files.get(filepath)
@@ -313,10 +288,48 @@ export const usePlaygroundStore = defineStore('playground', () => {
     }
   }
 
+  async function mountGuide(guide?: GuideMeta, withSolution = false) {
+    await mountPromise
+
+    // TODO: only make nessary changes
+    // Unmount the old guide
+    await Promise.all(guideDispose.map(dispose => dispose()))
+    guideDispose.length = 0 // 清空釋放函數列表
+
+    if (guide) {
+      // Mount the new guide
+      // eslint-disable-next-line no-console
+      console.log('nowww mounting guide', guide)
+
+      const overrides = {
+        ...guide.files,
+        ...(withSolution ? guide.solutions : {}),
+      }
+
+      await _mountFiles(overrides)
+
+      features.value = guide.features || {}
+    }
+    else {
+      features.value = {}
+    }
+
+    previewLocation.value.fullPath = guide?.startingUrl || '/'
+    fileSelected.value = files.get(guide?.startingFile || 'app.vue')
+    updatePreviewUrl()
+
+    mountedGuide.value = guide
+    showingSolution.value = withSolution
+
+    // TODO: trigger a editor update
+    return undefined
+  }
+
   return { // 返回 store 的公共接口
     webcontainer,
     updatePreviewUrl,
     status,
+    showingSolution,
     restartServer: startServer,
     previewUrl,
     previewLocation,
@@ -324,11 +337,11 @@ export const usePlaygroundStore = defineStore('playground', () => {
     mountedGuide,
     fileSelected,
     files,
+    features,
     error,
     downloadZip,
     currentProcess,
     clientInfo,
-    features,
   }
 })
 

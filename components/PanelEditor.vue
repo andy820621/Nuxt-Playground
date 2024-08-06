@@ -9,7 +9,7 @@ const files = computed(() => Array.from(play.files.values()).filter(file => !isF
 const directory = computed(() => filesToVirtualFsTree(files.value))
 const input = ref<string>('')
 
-watch(() => [play.fileSelected, play.mountedGuide], () => {
+watch(() => [play.fileSelected, play.mountedGuide, play.showingSolution], () => {
   input.value = play.fileSelected?.read() ?? ''
 })
 

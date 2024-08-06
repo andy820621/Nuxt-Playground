@@ -17,6 +17,10 @@ const timeAgo = useTimeAgo(buildTime)
 
     <div flex-auto />
 
+    <button v-if="play.mountedGuide?.solutions" @click="play.mountGuide(play.mountedGuide, !play.showingSolution)">
+      Toggle Solution
+    </button>
+
     <button
       v-if="play.status === 'ready' && play.features.download !== false"
       rounded p2
