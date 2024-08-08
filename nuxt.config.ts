@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'floating-vue/nuxt',
     '~/modules/template-loader',
+    '~/modules/nuxt-link',
   ],
   colorMode: {
     classSuffix: '',

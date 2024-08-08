@@ -9,6 +9,7 @@ export const useGuideStore = defineStore('guide', () => {
   const features = ref<PlaygroundFeatures>({}) // terminal、fileTree、download...等屬性的狀態
   const currentGuide = shallowRef<Raw<GuideMeta>>()
   const showingSolution = ref(false)
+  const embeddedDocs = ref('')
 
   watch(features, () => { // 監聽 features 的變化，根據變化更新 terminal UI 狀態
     if (features.value.fileTree === true) {
@@ -51,12 +52,18 @@ export const useGuideStore = defineStore('guide', () => {
     await mount(currentGuide.value, !showingSolution.value)
   }
 
+  function openEmbeddedDocs(url: string) {
+    embeddedDocs.value = url
+  }
+
   return {
     mount,
     toggleSolutions,
     features,
     currentGuide,
     showingSolution,
+    embeddedDocs,
+    openEmbeddedDocs,
   }
 })
 
