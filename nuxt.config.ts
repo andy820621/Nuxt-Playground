@@ -81,7 +81,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      titleTemplate: '%s - Nuxt Playground',
+      titleTemplate: '%s - Nuxt Tutorial',
     },
   },
   devtools: {
