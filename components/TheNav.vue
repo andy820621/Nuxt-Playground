@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const ui = useUiState()
 const play = usePlaygroundStore()
+const guide = useGuideStore()
 
 const runtime = useRuntimeConfig()
 const repo = 'https://github.com/andy820621/Nuxt-Playground'
@@ -17,16 +18,19 @@ const timeAgo = useTimeAgo(buildTime)
 
     <div flex-auto />
 
-    <button v-if="play.mountedGuide?.solutions" @click="play.mountGuide(play.mountedGuide, !play.showingSolution)">
+    <button
+      v-if="guide.currentGuide?.solutions"
+      @click="guide.toggleSolutions()"
+    >
       Toggle Solution
     </button>
 
     <button
-      v-if="play.status === 'ready' && play.features.download !== false"
+      v-if="play.status === 'ready' && guide.features.download !== false"
       rounded p2
       hover="bg-active"
       title="Download as ZIP"
-      @click="play.downloadZip()"
+      @click="downloadZip(play.webcontainer!)"
     >
       <div i-ph-download-duotone text-2xl />
     </button>
@@ -52,7 +56,6 @@ const timeAgo = useTimeAgo(buildTime)
     </VDropdown>
 
     <button
-      v-if="play.features.terminal !== false"
       rounded p2
       title="Toggle terminal"
       hover="bg-active"

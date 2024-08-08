@@ -1,9 +1,7 @@
 import type { Raw } from 'vue'
 import type { WebContainer, WebContainerProcess } from '@webcontainer/api'
-import { dirname } from 'pathe'
 import { VirtualFile } from '../structures/VirtualFile'
-import type { ClientInfo } from '~/types/rpc'
-import type { GuideMeta, PlaygroundFeatures } from '~/types/guides'
+import { filesToWebContainerFs } from '~/templates/utils'
 
 export const PlaygroundStatusOrder = [
   'init',
@@ -19,66 +17,52 @@ export type PlaygroundStatus = typeof PlaygroundStatusOrder[number] | 'error'
 const NUXT_PORT = 4000
 
 export const usePlaygroundStore = defineStore('playground', () => {
-  const ui = useUiState()
+  const preview = usePreviewStore()
 
   const webcontainer = shallowRef<Raw<WebContainer>>()
   const status = ref<PlaygroundStatus>('init')
-  const showingSolution = ref(false)
-  const mountedGuide = shallowRef<Raw<GuideMeta>>()
   const fileSelected = shallowRef<Raw<VirtualFile>>()
   const files = shallowReactive<Raw<Map<string, VirtualFile>>>(new Map()) // 存儲虛擬文件列表
-  const features = ref<PlaygroundFeatures>({})
   const error = shallowRef<{ message: string }>()
   const currentProcess = shallowRef<Raw<WebContainerProcess | undefined>>()
-  const clientInfo = ref<ClientInfo>()
+
+  let filesTemplate: Record<string, string> = {}
 
   const INSTALL_MANAGER = 'pnpm'
 
-  const previewLocation = ref({
-    origin: '',
-    fullPath: '',
-  })
-  const previewUrl = ref('') // 完整的預覽 URL
-
-  function updatePreviewUrl() {
-    previewUrl.value = previewLocation.value.origin + previewLocation.value.fullPath
-  }
-
   const colorMode = useColorMode()
-  let mountPromise: Promise<void> | undefined
+  let _promiseInit: Promise<void> | undefined
   let hasInstalled = false
 
-  // 在客戶端側掛載 playground
   if (import.meta.client) {
-    async function mount() {
-      const { templates } = await import('../templates') // 導入模板
-      const { files: _files, tree } = await templates.basic({ // 獲取模板文件及虛擬文件樹
-        nuxtrc: [
-          // 根據顏色模式設置初始 HTML 類
-          colorMode.value === 'dark'
-            ? 'app.head.htmlAttrs.class=dark'
-            : '',
-        ],
-      })
+    async function init() { // 僅在客戶端初始化
+      const [
+        wc,
+        filesRaw,
+      ] = await Promise.all([
+        import('@webcontainer/api').then(({ WebContainer }) => WebContainer.boot()), // 啟動 WebContainer
 
-      const wc = await import('@webcontainer/api') // 導入 WebContainer
-        .then(({ WebContainer }) => WebContainer.boot()) // 啟動 WebContainer
+        import('../templates') // 加載模板文件
+          .then(r => r.templates.basic({
+            nuxtrc: [ // Have color mode on initial load
+              colorMode.value === 'dark' ? 'app.head.htmlAttrs.class=dark' : '',
+            ],
+          })),
+      ])
+
+      filesTemplate = filesRaw
 
       webcontainer.value = wc // 存儲 WebContainer 實例
-      // 存儲文件列表
-      _files.forEach((file) => {
-        files.set(file.filepath, file)
-        file.wc = wc
-      })
 
-      _files.forEach((file) => { // 為每個文件添加 WebContainer 引用
-        file.wc = wc
-      })
+      Object.entries(filesRaw)
+        .forEach(([path, content]) => {
+          files.set(path, new VirtualFile(path, content, wc)) // 創建虛擬文件並存儲
+        })
 
       wc.on('server-ready', async (port, url) => {
         // Nuxt 監聽多個端口，'server-ready' 會為每個端口觸發，我們需要專注於主要的那個
         if (port === NUXT_PORT) {
-          previewLocation.value = {
+          preview.location = {
             origin: url,
             fullPath: '/',
           }
@@ -93,11 +77,11 @@ export const usePlaygroundStore = defineStore('playground', () => {
       })
 
       status.value = 'mount'
-      await wc.mount(tree)
+      await wc.mount(filesToWebContainerFs([...files.values()]))
 
       startServer() // 啟動服務器
 
-      // 在開發模式下，進行熱模塊替換時，我們終止之前的進程，同時重用相同的 WebContainer
+      // 在開發模式下，進行熱模塊替換時，我們終止之前的進程
       if (import.meta.hot) {
         import.meta.hot.accept(() => {
           killPreviousProcess()
@@ -105,23 +89,8 @@ export const usePlaygroundStore = defineStore('playground', () => {
       }
     }
 
-    mountPromise = mount()
+    _promiseInit = init()
   }
-
-  watch(features, () => {
-    if (features.value.fileTree) {
-      if (ui.panelFileTree <= 0)
-        ui.panelFileTree = 20
-    }
-    else if (features.value.fileTree === false) {
-      ui.panelFileTree = 0
-    }
-
-    if (features.value.terminal)
-      ui.showTerminal = true
-    else if (features.value.terminal === false)
-      ui.showTerminal = false
-  })
 
   let abortController: AbortController | undefined // 用於中止操作的控制器
 
@@ -207,145 +176,67 @@ export const usePlaygroundStore = defineStore('playground', () => {
     await spawn(wc, 'jsh') // 啟動 jsh
   }
 
-  async function downloadZip() {
-    if (!import.meta.client)
-      return
-
-    const wc = webcontainer.value!
-
-    const { default: JSZip } = await import('jszip')
-    const zip = new JSZip()
-
-    type Zip = typeof zip
-
-    const crawlFiles = async (dir: string, zip: Zip) => { // 遍歷文件並添加到 zip
-      const files = await wc.fs.readdir(dir, { withFileTypes: true })
-
-      await Promise.all(
-        files.map(async (file) => {
-          if (isFileIgnored(file.name)) // 如果文件被忽略，跳過
-            return
-
-          if (file.isFile()) {
-            // TODO: 如果是 package.json，我們修改以移除一些字段
-            const content = await wc.fs.readFile(`${dir}/${file.name}`, 'utf8')
-            zip.file(file.name, content)
-          }
-          else if (file.isDirectory()) {
-            const folder = zip.folder(file.name)!
-            return crawlFiles(`${dir}/${file.name}`, folder)
-          }
-        }),
-      )
-    }
-
-    await crawlFiles('.', zip)
-
-    const blob = await zip.generateAsync({ type: 'blob' }) // 生成 zip blob
-    const url = URL.createObjectURL(blob)
-    const date = new Date()
-    const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`
-    const link = document.createElement('a')
-    link.href = url
-    // TODO: 使用當前教程名稱生成更好的文件名
-    link.download = `nuxt-playground-${dateString}.zip`
-    link.click()
-    link.remove()
-    URL.revokeObjectURL(url)
-  }
-
-  const guideDispose: (() => void | Promise<void>)[] = [] // 用於存儲每個 guide 的釋放函數
-
-  async function _mountFiles(overrides: Record<string, string>) {
-    await Promise.all(
-      Object.entries(overrides)
-        .map(async ([filepath, content]) => {
-          await webcontainer.value?.fs.mkdir(dirname(filepath), { recursive: true })
-          await updateOrCreateFile(filepath, content)
-        }),
-    )
-
-    async function updateOrCreateFile(filepath: string, content: string) {
-      const file = files.get(filepath)
-      if (file) {
-        const oldContent = file.read()
+  async function _updateOrCreateFile(filepath: string, content: string) {
+    const file = files.get(filepath)
+    if (file) {
+      if (file.read() !== content) // 如果檔案內容不同，才更新檔案
         await file.write(content)
-        guideDispose.push(async () => {
-          await file.write(oldContent)
-        })
-        return file
-      }
-      else {
-        const newFile = new VirtualFile(filepath, content, webcontainer.value)
-        await newFile.write(content)
-        files.set(filepath, newFile)
-        guideDispose.push(async () => {
-          files.delete(filepath)
-          await webcontainer.value!.fs.rm(filepath)
-        })
-        return newFile
-      }
-    }
-  }
-
-  async function mountGuide(guide?: GuideMeta, withSolution = false) {
-    await mountPromise
-
-    // TODO: only make nessary changes
-    // Unmount the old guide
-    await Promise.all(guideDispose.map(dispose => dispose()))
-    guideDispose.length = 0 // 清空釋放函數列表
-
-    if (guide) {
-      // Mount the new guide
-      // eslint-disable-next-line no-console
-      console.log('nowww mounting guide', guide)
-
-      const overrides = {
-        ...guide.files,
-        ...(withSolution ? guide.solutions : {}),
-      }
-
-      await _mountFiles(overrides)
-
-      features.value = guide.features || {}
+      return file
     }
     else {
-      features.value = {}
+      const newFile = new VirtualFile(filepath, content, webcontainer.value!)
+      files.set(filepath, newFile)
+      await newFile.write(content)
+      return newFile
     }
-
-    previewLocation.value.fullPath = guide?.startingUrl || '/'
-    fileSelected.value = files.get(guide?.startingFile || 'app.vue')
-    updatePreviewUrl()
-
-    mountedGuide.value = guide
-    showingSolution.value = withSolution
-
-    // TODO: trigger a editor update
-    return undefined
   }
 
-  return { // 返回 store 的公共接口
+  /**
+   * Mount files to WebContainer.
+   * This will do a diff with the current files and only update the ones that changed
+   */
+  async function mount(map: Record<string, string>, templates = filesTemplate) {
+    const objects = {
+      ...templates,
+      ...map,
+    }
+
+    await Promise.all([
+      // 更新或創建檔案
+      ...Object.entries(objects)
+        .map(async ([filepath, content]) => {
+          await _updateOrCreateFile(filepath, content)
+        }),
+      // 刪除多餘的檔案
+      ...Array.from(files.keys())
+        .filter(filepath => !(filepath in objects))
+        .map(async (filepath) => {
+          const file = files.get(filepath)
+          await file?.remove()
+          files.delete(filepath)
+        }),
+    ])
+  }
+
+  return {
+    get init() {
+      return _promiseInit
+    },
+
     webcontainer,
-    updatePreviewUrl,
     status,
-    showingSolution,
+    error,
+    currentProcess,
+
     restartServer: startServer,
-    previewUrl,
-    previewLocation,
-    mountGuide,
-    mountedGuide,
+
     fileSelected,
     files,
-    features,
-    error,
-    downloadZip,
-    currentProcess,
-    clientInfo,
+    mount,
   }
 })
 
 export type PlaygroundStore = ReturnType<typeof usePlaygroundStore> // 導出 PlaygroundStore 類型
 
-if (import.meta.hot) // 支持熱模塊替換
+if (import.meta.hot)
   import.meta.hot.accept(acceptHMRUpdate(usePlaygroundStore, import.meta.hot))

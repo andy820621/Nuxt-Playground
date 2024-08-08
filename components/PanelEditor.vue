@@ -4,12 +4,13 @@ import { filesToVirtualFsTree } from '~/templates/utils'
 
 const ui = useUiState()
 const play = usePlaygroundStore()
+const guide = useGuideStore()
 
 const files = computed(() => Array.from(play.files.values()).filter(file => !isFileIgnored(file.filepath)))
 const directory = computed(() => filesToVirtualFsTree(files.value))
 const input = ref<string>('')
 
-watch(() => [play.fileSelected, play.mountedGuide, play.showingSolution], () => {
+watch(() => [play.fileSelected, guide.currentGuide, guide.showingSolution], () => {
   input.value = play.fileSelected?.read() ?? ''
 })
 
