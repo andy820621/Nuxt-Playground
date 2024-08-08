@@ -66,16 +66,6 @@ function getModel(filepath: string) {
 }
 
 watch(
-  () => props.modelValue,
-  (value) => {
-    if (!el.value)
-      return
-    getModel(props.filepath).setValue(value)
-  },
-  { immediate: true },
-)
-
-watch(
   el,
   async (value) => {
     if (!value)
@@ -122,6 +112,21 @@ watch(
       () => props.filepath,
       () => {
         editor.setModel(getModel(props.filepath))
+      },
+    )
+
+    watch(
+      () => props.modelValue,
+      (value) => {
+        if (value === editor.getValue())
+          return
+
+        const selections = editor.getSelections()
+        const model = getModel(props.filepath)
+        model.setValue(value)
+
+        if (selections)
+          editor.setSelections(selections)
       },
     )
 

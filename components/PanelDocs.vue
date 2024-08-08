@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const guide = useGuideStore()
 const { page } = useContent()
-const sourceUrl = computed(() => `https://github.com/andy820621/Nuxt-Playground/edit/main/content/${page.value._file}`)
+const sourceUrl = computed(() => page.value?._file
+  ? `https://github.com/andy820621/Nuxt-Playground/edit/main/content/${page.value._file}`
+  : undefined)
 </script>
 
 <template>
@@ -31,6 +33,7 @@ const sourceUrl = computed(() => `https://github.com/andy820621/Nuxt-Playground/
 
     <div border="t base dashed" px6 py2>
       <NuxtLink
+        v-if="sourceUrl"
         :to="sourceUrl" target="_blank"
         flex="~ items-center gap-2" op50 hover="text-primary op100"
       >

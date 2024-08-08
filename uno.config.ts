@@ -20,7 +20,7 @@ export default defineConfig({
   theme: {
     colors: {
       primary: {
-        DEFAULT: '#00DC82',
+        DEFAULT: '#00c16a',
       },
     },
   },
@@ -32,7 +32,10 @@ export default defineConfig({
     presetWebFonts({
       provider: 'bunny',
       fonts: {
-        sans: 'DM Sans', // 適合用於一般文本和界面設計中，提供現代、清晰的外觀
+        sans: {
+          name: 'DM Sans',
+          weights: [200, 400, 600, 700],
+        }, // 適合用於一般文本和界面設計中，提供現代、清晰的外觀
         mono: 'DM Mono', // 適合用於代碼顯示和需要精確對齊的文本中，便於閱讀和排版
       },
     }),
