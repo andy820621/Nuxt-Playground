@@ -73,7 +73,7 @@ const panelInitTerminal = computed(() => isMounted.value || {
       <Splitpanes
         horizontal relative max-h-full w-full of-hidden
         :class="guide.embeddedDocs ? 'z-101' : ''"
-        @resize="startDragging"
+        @resize="draggingEmbeddedDocs"
         @resized="endDraggingHorizontal"
       >
         <Pane :size="ui.panelEditor" min-size="10" :style="panelInitEditor">
