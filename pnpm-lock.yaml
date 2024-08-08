@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  shikiji: ^0.9.12
+  shikiji: ^0.9.17
 
 patchedDependencies:
   splitpanes@3.1.5:
@@ -47,13 +47,13 @@ importers:
         specifier: ^2.2.5
         version: 2.2.5
       shikiji:
-        specifier: ^0.9.12
+        specifier: ^0.9.17
         version: 0.9.19
       shikiji-core:
-        specifier: ^0.9.12
+        specifier: ^0.9.17
         version: 0.9.19
       shikiji-monaco:
-        specifier: ^0.9.12
+        specifier: ^0.9.17
         version: 0.9.19
       splitpanes:
         specifier: ^3.1.5

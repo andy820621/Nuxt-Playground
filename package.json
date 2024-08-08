@@ -9,7 +9,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "typecheck": "nuxt typecheck",
-    "postinstall": "nuxt prepare && pnpm -C ./templates/basic install && pnpm -C ./templates/basic prepare",
+    "prepare": "nuxt prepare && pnpm -C ./templates/basic install && pnpm -C ./templates/basic prepare",
     "lint": "eslint .",
     "format": "eslint . --fix"
   },
@@ -24,9 +24,9 @@
     "monaco-textmate": "^3.0.1",
     "monaco-volar": "^0.4.0",
     "onigasm": "^2.2.5",
-    "shikiji": "^0.9.12",
-    "shikiji-core": "^0.9.12",
-    "shikiji-monaco": "^0.9.12",
+    "shikiji": "^0.9.17",
+    "shikiji-core": "^0.9.17",
+    "shikiji-monaco": "^0.9.17",
     "splitpanes": "^3.1.5",
     "strip-json-comments": "5.0.1",
     "typescript": "^5.3.3",
@@ -68,6 +68,6 @@
     }
   },
   "resolutions": {
-    "shikiji": "^0.9.12"
+    "shikiji": "^0.9.17"
   }
 }
