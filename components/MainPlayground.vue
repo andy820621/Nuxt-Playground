@@ -102,7 +102,7 @@ const panelInitTerminal = computed(() => isMounted.value || {
     <!-- 只有在 guide.embeddedDocs 有值時才會渲染 -->
     <Splitpanes
       v-if="guide.embeddedDocs"
-      fixed inset-0 z-embedded-docs
+      z-embedded-docs fixed inset-0
       :class="{ 'splitpanes--dragging': ui.isPanelDragging }"
       @resize="draggingEmbeddedDocs"
       @resized="endDraggingVertical"
@@ -116,8 +116,8 @@ const panelInitTerminal = computed(() => isMounted.value || {
         <!-- 內嵌文檔顯示 guide.embeddedDocs 指定的 URL -->
         <iframe
           :class="{ 'pointer-events-none': ui.isPanelDragging }"
-          :src="guide.embeddedDocs" crossorigin="anonymous"
-          inset-0 h-full w-full
+          :src="guide.embeddedDocs"
+          crossorigin="anonymous" allow="cross-origin-isolated" credentialless
         />
       </Pane>
 
@@ -129,7 +129,7 @@ const panelInitTerminal = computed(() => isMounted.value || {
       >
         <div
           border="~ base"
-          absolute left--4 top-4 z-embedded-docs-close h-8 w-8 of-hidden rounded-full bg-base
+          z-embedded-docs-close absolute left--4 top-4 h-8 w-8 of-hidden rounded-full bg-base
         >
           <button
             flex="~ items-center justify-center"

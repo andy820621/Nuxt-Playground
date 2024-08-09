@@ -11,9 +11,17 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@pinia/nuxt',
     'floating-vue/nuxt',
+
+    // seo
+    '@nuxtjs/sitemap',
+
+    // local
     '~/modules/template-loader',
     '~/modules/nuxt-link',
   ],
+  site: {
+    url: 'https://learn-dev.nuxt.com',
+  },
   colorMode: {
     classSuffix: '',
   },
