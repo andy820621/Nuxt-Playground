@@ -16,6 +16,11 @@ export default defineConfig({
     'bg-faded': 'bg-gray:5',
     'bg-base': 'bg-white dark:bg-[#050420]',
     'text-faded': 'text-gray6:100 dark:text-gray:100',
+
+    'z-embedded-docs': 'z-100',
+    'z-embedded-docs-raised': 'z-101',
+    'z-splitter': 'z-102',
+    'z-embedded-docs-close': 'z-103',
   },
   theme: {
     colors: {

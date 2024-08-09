@@ -72,7 +72,7 @@ const panelInitTerminal = computed(() => isMounted.value || {
     >
       <Splitpanes
         horizontal relative max-h-full w-full of-hidden
-        :class="guide.embeddedDocs ? 'z-101' : ''"
+        :class="guide.embeddedDocs ? 'z-embedded-docs-raised' : ''"
         @resize="draggingEmbeddedDocs"
         @resized="endDraggingHorizontal"
       >
@@ -102,7 +102,7 @@ const panelInitTerminal = computed(() => isMounted.value || {
     <!-- 只有在 guide.embeddedDocs 有值時才會渲染 -->
     <Splitpanes
       v-if="guide.embeddedDocs"
-      fixed inset-0 z-100
+      z-embedded-docs fixed inset-0
       :class="{ 'splitpanes--dragging': ui.isPanelDragging }"
       @resize="draggingEmbeddedDocs"
       @resized="endDraggingVertical"
@@ -128,7 +128,8 @@ const panelInitTerminal = computed(() => isMounted.value || {
         :style="panelInitRight"
       >
         <div
-          border="~ base" absolute left--4 top-4 z-102 h-8 w-8 of-hidden rounded-full bg-base
+          border="~ base" z-embedded-docs-close
+          absolute left--4 top-4 h-8 w-8 of-hidden rounded-full bg-base
         >
           <button
             flex="~ items-center justify-center"
