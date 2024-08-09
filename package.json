@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "learn.nuxt.com",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@9.6.0",
@@ -37,8 +37,10 @@
     "@iconify/json": "^2.2.233",
     "@nuxt/content": "^2.13.2",
     "@nuxt/devtools": "^1.0.5",
+    "@nuxt/icon": "^1.4.5",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.2",
+    "@nuxtjs/seo": "2.0.0-rc.18",
     "@nuxtjs/sitemap": "6.0.0-beta.1",
     "@pinia/nuxt": "^0.5.2",
     "@types/splitpanes": "^2.2.6",
