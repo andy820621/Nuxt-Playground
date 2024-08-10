@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     url: 'https://learn-dev.nuxt.com',
   },
   ogImage: {
+    debug: true,
     defaults: {
       component: 'NuxtSeo',
       props: {
@@ -103,11 +104,11 @@ export default defineNuxtConfig({
         dark: 'vitesse-dark',
       },
     },
-    // markdown: {
-    //   remarkPlugins: [
-    //     'remark-external-links',
-    //   ],
-    // },
+    markdown: {
+      remarkPlugins: [
+        'remark-external-links',
+      ],
+    },
   },
   devtools: {
     enabled: true,

@@ -50,10 +50,10 @@ importers:
         specifier: ^0.9.17
         version: 0.9.19
       shikiji-core:
-        specifier: ^0.9.17
+        specifier: ^0.9.19
         version: 0.9.19
       shikiji-monaco:
-        specifier: ^0.9.17
+        specifier: ^0.9.19
         version: 0.9.19
       splitpanes:
         specifier: ^3.1.5
@@ -62,7 +62,7 @@ importers:
         specifier: 5.0.1
         version: 5.0.1
       typescript:
-        specifier: ^5.3.3
+        specifier: ^5.5.4
         version: 5.5.4
       unified:
         specifier: ^11.0.5
@@ -141,7 +141,7 @@ importers:
         specifier: ^3.12.4
         version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.2.0)(encoding@0.1.13)(eslint@8.57.0)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.19.1)(terser@5.31.5)(typescript@5.5.4)(vite@5.3.5(@types/node@22.2.0)(terser@5.31.5))(vue-tsc@2.0.29(typescript@5.5.4))
       pathe:
-        specifier: ^1.1.1
+        specifier: ^1.1.2
         version: 1.1.2
       pnpm-patch-i:
         specifier: ^0.4.1
@@ -150,7 +150,7 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
       theme-vitesse:
-        specifier: ^0.7.5
+        specifier: ^0.7.9
         version: 0.7.9
       unocss:
         specifier: ^0.61.7
@@ -1559,9 +1559,6 @@ packages:
 
   '@types/node@22.0.0':
     resolution: {integrity: sha512-VT7KSYudcPOzP5Q0wfbowyNLaVR8QWUdw+088uFWwfvpY6uCWaXpqV6ieLAu9WBcnTa7H4Z5RLK8I5t2FuOcqw==}
-
-  '@types/node@22.1.0':
-    resolution: {integrity: sha512-AOmuRF0R2/5j1knA3c6G3HOk523Ga+l+ZXltX8SF1+5oqcXijjfTd8fY3XRZqSihEu9XhtQnKYLmkFaoxgsJHw==}
 
   '@types/node@22.2.0':
     resolution: {integrity: sha512-bm6EG6/pCpkxDf/0gDNDdtDILMOHgaQBVOJGdwsqClnxA3xL6jtMv76rLBc006RVMWbmaf0xbmom4Z/5o2nRkQ==}
@@ -7943,10 +7940,6 @@ snapshots:
     dependencies:
       undici-types: 6.11.1
 
-  '@types/node@22.1.0':
-    dependencies:
-      undici-types: 6.13.0
-
   '@types/node@22.2.0':
     dependencies:
       undici-types: 6.13.0
@@ -9132,7 +9125,7 @@ snapshots:
 
   chrome-launcher@1.1.2:
     dependencies:
-      '@types/node': 22.1.0
+      '@types/node': 22.2.0
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 2.0.1

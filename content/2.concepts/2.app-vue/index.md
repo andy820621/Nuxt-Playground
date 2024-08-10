@@ -1,6 +1,6 @@
----
+<!-- ---
 ogImage: true
----
+--- -->
 
 # App.vue
 
