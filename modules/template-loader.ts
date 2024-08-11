@@ -3,6 +3,7 @@ import fs from 'node:fs/promises'
 import { addTemplate, addVitePlugin, defineNuxtModule } from '@nuxt/kit' // 用於定義 Nuxt 模組和添加模板
 import fg from 'fast-glob' // 用於匹配檔案模式
 import { relative, resolve } from 'pathe' // 用於計算相對路徑
+import { SourceMapGenerator } from 'source-map'
 
 export default defineNuxtModule({
   meta: {
@@ -88,12 +89,25 @@ export default defineNuxtModule({
           getFileMap(resolve(id, '../solutions')),
         ])
 
-        return [
+        const transformedCode = [
           code,
-          `meta.files = ${JSON.stringify(files)}`,
-          `meta.solutions = ${JSON.stringify(solutions)}`,
-          '',
+      `meta.files = ${JSON.stringify(files)}`,
+      `meta.solutions = ${JSON.stringify(solutions)}`,
+      '',
         ].join('\n')
+
+        // 假設您需要手動生成源映射
+        const map = new SourceMapGenerator({ file: id })
+        map.addMapping({
+          generated: { line: 1, column: 0 },
+          source: id,
+          original: { line: 1, column: 0 },
+        })
+
+        return {
+          code: transformedCode,
+          map: map.toString(), // 返回生成的源映射
+        }
       },
     })
   },
