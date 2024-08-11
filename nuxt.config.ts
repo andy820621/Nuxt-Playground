@@ -22,7 +22,8 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
   site: {
-    url: 'https://learn-dev.nuxt.com',
+    url: 'https://nuxt-tutorial-playground.netlify.app/',
+    name: 'Nuxt Tutorial Playground',
   },
   ogImage: {
     debug: true,

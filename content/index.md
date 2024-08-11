@@ -1,11 +1,9 @@
-<!-- ---
-ogImage:
-  props:
-    title: Nuxt Tutorial
-    excerpt: Hello
-    colorMode: dark
-    description: An interactive tutorial for learning Nuxt
---- -->
+---
+title: Nuxt Tutorial
+excerpt: Hello
+colorMode: dark
+description: An interactive tutorial for learning Nuxt
+---
 
 # Welcome to Nuxt Tutorial!
 

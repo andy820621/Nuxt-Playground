@@ -28,6 +28,8 @@ router.afterEach(async (to) => {
 onMounted(() => {
   mount(router.currentRoute.value.path)
 })
+
+defineOgImageComponent('NuxtSeo')
 </script>
 
 <template>
