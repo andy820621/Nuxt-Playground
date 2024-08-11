@@ -51,7 +51,7 @@ useEventListener('keydown', (e) => {
 <template>
   <div
     v-if="commands.isShown"
-    z-index-command-palette fixed inset-0 flex="~ items-center justify-center"
+    fixed inset-0 z-index-command-palette flex="~ items-center justify-center"
   >
     <div absolute inset-0 z--1 bg-black:75 /> <!-- 背景遮罩層 -->
 
