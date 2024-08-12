@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   ogImage: {
     debug: true,
     defaults: {
-      component: 'NuxtSeo',
+      component: 'OgImageDocs',
       props: {
         colorMode: 'dark',
       },

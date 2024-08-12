@@ -29,7 +29,7 @@ onMounted(() => {
   mount(router.currentRoute.value.path)
 })
 
-defineOgImageComponent('NuxtSeo')
+defineOgImageComponent('OgImageDocs')
 </script>
 
 <template>
