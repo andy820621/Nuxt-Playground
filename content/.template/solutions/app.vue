@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const msg = 'THE SOLUTIONS'
+// TODO: remove this solution later
+const msg = 'This is the solution!'
 </script>
 
 <template>
