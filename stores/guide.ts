@@ -1,12 +1,17 @@
 import type { Raw } from 'vue'
 import type { GuideMeta, PlaygroundFeatures } from '~/types/guides'
 
+const defaultFeatures: PlaygroundFeatures = Object.freeze({
+  fileTree: false,
+  terminal: false,
+})
+
 export const useGuideStore = defineStore('guide', () => {
   const play = usePlaygroundStore()
   const ui = useUiState()
   const preview = usePreviewStore()
 
-  const features = ref<PlaygroundFeatures>({}) // terminal、fileTree、download...等屬性的狀態
+  const features = ref<PlaygroundFeatures>(defaultFeatures) // terminal、fileTree、download...等屬性的狀態
   const currentGuide = shallowRef<Raw<GuideMeta>>()
   const showingSolution = ref(false)
   const embeddedDocs = ref('')
@@ -41,7 +46,7 @@ export const useGuideStore = defineStore('guide', () => {
     preview.location.fullPath = guide?.startingUrl || '/' // 設定預覽的起始 URL
     preview.updateUrl()
 
-    features.value = guide?.features || {} // 更新 features 用於控制 terminal 狀態
+    features.value = guide?.features || defaultFeatures // 更新 features 用於控制 terminal 狀態
     currentGuide.value = guide
     showingSolution.value = withSolution // 在確定 mount 後設定是否顯示解決方案
 
