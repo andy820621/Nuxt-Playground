@@ -40,7 +40,7 @@
     "@nuxt/icon": "^1.4.5",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.2",
-    "@nuxtjs/seo": "2.0.0-rc.18",
+    "@nuxtjs/seo": "2.0.0-rc.10",
     "@pinia/nuxt": "^0.5.2",
     "@types/splitpanes": "^2.2.6",
     "@unocss/eslint-plugin": "^0.61.9",
@@ -71,6 +71,12 @@
     }
   },
   "resolutions": {
+    "@nuxt/devtools": "^1.0.5",
+    "@volar/monaco": "^1.11.1",
+    "@vue/language-service": "^1.8.27",
+    "@webcontainer/api": "^1.2.0",
+    "monaco-editor": "^0.45.0",
+    "monaco-editor-core": "^0.45.0",
     "shikiji": "^0.9.17"
   }
 }
