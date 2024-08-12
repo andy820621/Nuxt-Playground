@@ -65,6 +65,7 @@ const panelInitEditor = computed(() => isMounted.value || {
     </div>
     <Splitpanes
       of-hidden
+      :class="guide.features.fileTree === false ? 'disabled' : ''"
       @resize="startDragging"
       @resized="endDragging"
     >
