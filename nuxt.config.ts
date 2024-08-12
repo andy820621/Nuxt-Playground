@@ -63,6 +63,26 @@ export default defineNuxtConfig({
       ],
     },
   },
+  features: {
+    inlineStyles: false,
+  },
+  runtimeConfig: {
+    public: {
+      buildTime: Date.now(),
+      gitSha: execaSync('git', ['rev-parse', 'HEAD']).stdout.trim(),
+    },
+    app: {
+      devtools: {
+        iframeProps: {
+          allow: 'cross-origin-isolated',
+          credentialless: true,
+        },
+      },
+    },
+  },
+  devtools: {
+    enabled: true,
+  },
   nitro: {
     compressPublicAssets: true,
     routeRules: {
@@ -74,50 +94,10 @@ export default defineNuxtConfig({
       },
     },
   },
-  features: {
-    inlineStyles: false,
-  },
-  runtimeConfig: {
-    public: {
-      buildTime: Date.now(),
-      gitSha: execaSync('git', ['rev-parse', 'HEAD']).stdout.trim(),
-    },
-  },
   vite: {
     build: {
       minify: 'esbuild',
       cssMinify: 'esbuild',
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            // if (id.includes('node_modules')) {
-            //   if (id.includes('@iconify')) {
-            //     if (id.includes('simple-icons')) {
-            //       return 'iconify-simple-icons'
-            //     }
-            //     if (id.includes('devicon')) {
-            //       return 'iconify-devicon'
-            //     }
-            //     if (id.includes('logos')) {
-            //       return 'iconify-logos'
-            //     }
-            //     if (id.includes('carbon')) {
-            //       return 'iconify-carbon'
-            //     }
-            //   }
-            //   return id.toString().split('node_modules/')[1].split('/')[0].toString()
-            // }
-            if (id.includes('node_modules')) {
-              // 將 node_modules 中的模塊分開打包
-              return id
-                .toString()
-                .split('node_modules/')[1]
-                .split('/')[0]
-                .toString()
-            }
-          },
-        },
-      },
     },
     server: {
       headers: {
@@ -151,7 +131,5 @@ export default defineNuxtConfig({
       ],
     },
   },
-  devtools: {
-    enabled: true,
-  },
+
 })
