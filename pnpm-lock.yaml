@@ -1864,8 +1864,8 @@ packages:
   '@vueuse/core@10.11.1':
     resolution: {integrity: sha512-guoy26JQktXPcz+0n3GukWIy/JDNKti9v6VEMu6kV2sYBsWuGiTU8OWdg+ADfUbHg3/3DlqySDe7JmdHrktiww==}
 
-  '@vueuse/core@11.0.0-beta.2':
-    resolution: {integrity: sha512-rLSg6XJ7y7Lq0kPqsW3tm16odKBmDM9gPiRSME9IwMws1pxg8EFmpnoVe07srMzKvZksc2Lzx2r0VMq5ZwKMvw==}
+  '@vueuse/core@11.0.0-beta.3':
+    resolution: {integrity: sha512-aMMFg8F+jHqJrios77nXTc22K1DWh/Tm5AjJpweMsYlmjoGqJAXoKUIMzGN53hfaWXC7Lb8zahBBdXtUpEeHqg==}
 
   '@vueuse/head@2.0.0':
     resolution: {integrity: sha512-ykdOxTGs95xjD4WXE4na/umxZea2Itl0GWBILas+O4oqS7eXIods38INvk3XkJKjqMdWPcpCyLX/DioLQxU1KA==}
@@ -1875,8 +1875,8 @@ packages:
   '@vueuse/metadata@10.11.1':
     resolution: {integrity: sha512-IGa5FXd003Ug1qAZmyE8wF3sJ81xGLSqTqtQ6jaVfkeZ4i5kS2mwQF61yhVqojRnenVew5PldLyRgvdl4YYuSw==}
 
-  '@vueuse/metadata@11.0.0-beta.2':
-    resolution: {integrity: sha512-Gz4L5KQDCgmRBiDdvqsrMIWRmETWrgF/2lZq+k2sa/O6N5RfFNqBa1T/hpGH9s5Q44ZEC/uXv6e7NHbv9dB8mg==}
+  '@vueuse/metadata@11.0.0-beta.3':
+    resolution: {integrity: sha512-6pEfdK+hzi/E3nNJN1j74+oMIVRLAynpLtWYsWUeaIQ+AeWahsallKJzZh9dCTO1uUnyYI9PoqAaBWthOeiQ1g==}
 
   '@vueuse/nuxt@10.11.1':
     resolution: {integrity: sha512-UiaYSIwOkmUVn8Gl1AqtLWYR12flO+8sEu9X0Y1fNjSR7EWy9jMuiCvOGqwtoeTsqfHrivl0d5HfMzr11GFnMA==}
@@ -1886,8 +1886,8 @@ packages:
   '@vueuse/shared@10.11.1':
     resolution: {integrity: sha512-LHpC8711VFZlDaYUXEBbFBCQ7GS3dVU9mjOhhMhXP6txTV4EhYQg/KGnQuvt/sPAtoUKq7VVUnL6mVtFoL42sA==}
 
-  '@vueuse/shared@11.0.0-beta.2':
-    resolution: {integrity: sha512-NQ9fLd/OmJYhfY6nMGYk6EQ6WgAVB7AdWIgjU2/9Y7R+qL1+yI21scj6lFVdlW5TNeePVxhnCBJmV+TzuA4vlQ==}
+  '@vueuse/shared@11.0.0-beta.3':
+    resolution: {integrity: sha512-U+OSCFMKHumIzY7xjZTyas9rQ6d4B4yI4TIudM2pXqPg0djaVh7qVwVkN3UvyRaWwxwwk4Q//Jp+4+tonOHCow==}
 
   '@webassemblyjs/ast@1.12.1':
     resolution: {integrity: sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==}
@@ -2988,8 +2988,8 @@ packages:
     resolution: {integrity: sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg==}
     engines: {node: '>=16.17'}
 
-  execa@9.3.0:
-    resolution: {integrity: sha512-l6JFbqnHEadBoVAVpN5dl2yCyfX28WoBAGaoQcNmLLSedOxTxcn2Qa83s8I/PA5i56vWru2OHOtrwF7Om2vqlg==}
+  execa@9.3.1:
+    resolution: {integrity: sha512-gdhefCCNy/8tpH/2+ajP9IQc14vXchNdd0weyzSJEFURhRMGncQ+zKFxwjAufIewPEJm9BPOaJnvg2UtlH2gPQ==}
     engines: {node: ^18.19.0 || >=20.5.0}
 
   expand-template@2.0.3:
@@ -3362,8 +3362,8 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  human-signals@7.0.0:
-    resolution: {integrity: sha512-74kytxOUSvNbjrT9KisAbaTZ/eJwD/LrbM/kh5j0IhPuJzwuA19dWvniFGwBzN9rVjg+O/e+F310PjObDXS+9Q==}
+  human-signals@8.0.0:
+    resolution: {integrity: sha512-/1/GPCpDUCCYwlERiYjxoczfP0zfvZMU/OWgQPMya9AbAE24vseigFdhAMObpc8Q4lc/kjutPfUddDYyAmejnA==}
     engines: {node: '>=18.18.0'}
 
   ieee754@1.2.1:
@@ -8070,11 +8070,11 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@vueuse/core@11.0.0-beta.2(vue@3.4.37(typescript@5.5.4))':
+  '@vueuse/core@11.0.0-beta.3(vue@3.4.37(typescript@5.5.4))':
     dependencies:
       '@types/web-bluetooth': 0.0.20
-      '@vueuse/metadata': 11.0.0-beta.2
-      '@vueuse/shared': 11.0.0-beta.2(vue@3.4.37(typescript@5.5.4))
+      '@vueuse/metadata': 11.0.0-beta.3
+      '@vueuse/shared': 11.0.0-beta.3(vue@3.4.37(typescript@5.5.4))
       vue-demi: 0.14.10(vue@3.4.37(typescript@5.5.4))
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -8090,7 +8090,7 @@ snapshots:
 
   '@vueuse/metadata@10.11.1': {}
 
-  '@vueuse/metadata@11.0.0-beta.2': {}
+  '@vueuse/metadata@11.0.0-beta.3': {}
 
   '@vueuse/nuxt@10.11.1(magicast@0.3.4)(nuxt@3.12.4(@parcel/watcher@2.4.1)(@types/node@22.3.0)(eslint@9.9.0(jiti@1.21.6))(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.20.0)(terser@5.31.6)(typescript@5.5.4)(vite@5.4.0(@types/node@22.3.0)(terser@5.31.6))(vue-tsc@2.0.29(typescript@5.5.4)))(rollup@4.20.0)(vue@3.4.37(typescript@5.5.4))':
     dependencies:
@@ -8114,7 +8114,7 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@vueuse/shared@11.0.0-beta.2(vue@3.4.37(typescript@5.5.4))':
+  '@vueuse/shared@11.0.0-beta.3(vue@3.4.37(typescript@5.5.4))':
     dependencies:
       vue-demi: 0.14.10(vue@3.4.37(typescript@5.5.4))
     transitivePeerDependencies:
@@ -9390,13 +9390,13 @@ snapshots:
       signal-exit: 4.1.0
       strip-final-newline: 3.0.0
 
-  execa@9.3.0:
+  execa@9.3.1:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
       cross-spawn: 7.0.3
       figures: 6.1.0
       get-stream: 9.0.1
-      human-signals: 7.0.0
+      human-signals: 8.0.0
       is-plain-obj: 4.1.0
       is-stream: 4.0.1
       npm-run-path: 5.3.0
@@ -9823,7 +9823,7 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  human-signals@7.0.0: {}
+  human-signals@8.0.0: {}
 
   ieee754@1.2.1: {}
 
@@ -10855,7 +10855,7 @@ snapshots:
     dependencies:
       '@nuxt/devtools-kit': 1.3.9(magicast@0.3.4)(rollup@4.20.0)(vite@5.4.0(@types/node@22.3.0)(terser@5.31.6))
       '@nuxt/kit': 3.12.4(magicast@0.3.4)(rollup@4.20.0)
-      '@vueuse/core': 11.0.0-beta.2(vue@3.4.37(typescript@5.5.4))
+      '@vueuse/core': 11.0.0-beta.3(vue@3.4.37(typescript@5.5.4))
       chalk: 5.3.0
       cheerio: 1.0.0-rc.12
       diff: 5.2.0
@@ -10887,7 +10887,7 @@ snapshots:
       '@unocss/preset-wind': 0.61.9
       chrome-launcher: 1.1.2
       defu: 6.1.4
-      execa: 9.3.0
+      execa: 9.3.1
       image-size: 1.1.1
       nuxt-site-config: 2.2.15(magicast@0.3.4)(rollup@4.20.0)(vite@5.4.0(@types/node@22.3.0)(terser@5.31.6))(vue@3.4.37(typescript@5.5.4))
       nuxt-site-config-kit: 2.2.15(magicast@0.3.4)(rollup@4.20.0)(vue@3.4.37(typescript@5.5.4))
@@ -11311,7 +11311,7 @@ snapshots:
   pnpm-patch-i@0.4.1:
     dependencies:
       cac: 6.7.14
-      execa: 9.3.0
+      execa: 9.3.1
       find-up: 7.0.0
       fs-extra: 11.2.0
       launch-editor: 2.8.1

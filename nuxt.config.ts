@@ -114,6 +114,7 @@ export default defineNuxtConfig({
         '@volar/monaco/worker',
         'typescript',
         'unified',
+        'shiki',
       ],
     },
     plugins: [compression()],
