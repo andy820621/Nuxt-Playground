@@ -113,6 +113,7 @@ export default defineNuxtConfig({
         '@vue/language-service',
         '@volar/monaco/worker',
         'typescript',
+        'unified',
       ],
     },
     plugins: [compression()],
@@ -129,6 +130,9 @@ export default defineNuxtConfig({
       remarkPlugins: [
         'remark-external-links',
       ],
+    },
+    experimental: {
+      search: {},
     },
   },
 

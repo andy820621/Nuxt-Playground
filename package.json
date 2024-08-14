@@ -29,8 +29,7 @@
     "shikiji-monaco": "^0.9.19",
     "splitpanes": "^3.1.5",
     "strip-json-comments": "5.0.1",
-    "typescript": "^5.5.4",
-    "unified": "^11.0.5"
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.25.1",
@@ -76,6 +75,7 @@
     "@webcontainer/api": "^1.2.0",
     "monaco-editor": "^0.45.0",
     "monaco-editor-core": "^0.45.0",
-    "shikiji": "^0.9.19"
+    "shikiji": "^0.9.19",
+    "unified": "^11.0.5"
   }
 }
