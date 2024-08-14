@@ -75,6 +75,7 @@
     "@webcontainer/api": "^1.2.0",
     "monaco-editor": "^0.45.0",
     "monaco-editor-core": "^0.45.0",
+    "shiki": "^1.13.0",
     "shikiji": "^0.9.19",
     "unified": "^11.0.5"
   }
