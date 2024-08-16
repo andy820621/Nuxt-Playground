@@ -84,7 +84,11 @@ useEventListener('keydown', (e) => {
     v-if="commands.isShown"
     fixed inset-0 z-index-command-palette flex="~ items-center justify-center"
   >
-    <div absolute inset-0 z--1 bg-black:75 /> <!-- 背景遮罩層 -->
+    <!-- 背景遮罩層 -->
+    <div
+      absolute inset-0 z--1 bg-black:75
+      @click="commands.isShown = false"
+    />
 
     <!-- 命令面板 -->
     <div
