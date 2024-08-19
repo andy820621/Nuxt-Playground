@@ -14,8 +14,8 @@
     "format": "eslint . --fix"
   },
   "dependencies": {
-    "@shikijs/core": "1.0.0-beta.3",
-    "@shikijs/monaco": "1.0.0-beta.3",
+    "@shikijs/core": "1.1.5",
+    "@shikijs/monaco": "1.1.5",
     "@volar/monaco": "1.11.1",
     "@vue/language-service": "1.8.27",
     "@webcontainer/api": "1.2.0",
@@ -23,12 +23,12 @@
     "@xterm/xterm": "^5.5.0",
     "birpc": "^0.2.17",
     "floating-vue": "^5.2.2",
-    "monaco-editor": "^0.45.0",
+    "monaco-editor": "0.46.0",
     "monaco-editor-textmate": "^4.0.0",
     "monaco-textmate": "^3.0.1",
     "onigasm": "^2.2.5",
     "pathe": "^1.1.2",
-    "shiki": "1.0.0-beta.2",
+    "shiki": "1.1.5",
     "splitpanes": "^3.1.5",
     "strip-json-comments": "5.0.1",
     "theme-vitesse": "^0.7.9",
@@ -55,7 +55,7 @@
     "eslint": "^9.9.0",
     "eslint-plugin-format": "^0.1.2",
     "jszip": "^3.10.1",
-    "monaco-editor-core": "^0.45.0",
+    "monaco-editor-core": "0.46.0",
     "nuxt": "^3.12.4",
     "pnpm-patch-i": "^0.4.1",
     "remark-external-links": "^9.0.1",
@@ -69,8 +69,6 @@
     }
   },
   "resolutions": {
-    "monaco-editor": "^0.45.0",
-    "monaco-editor-core": "^0.45.0",
     "shikiji": "npm:shiki@1.0.0-beta.3",
     "shikiji-transformers": "npm:@shikijs/transformers@1.0.0-beta.3",
     "unified": "^11.0.5"
