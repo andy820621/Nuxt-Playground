@@ -70,6 +70,9 @@ importers:
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
       vue:
         specifier: latest
         version: 3.4.38(typescript@5.5.4)
