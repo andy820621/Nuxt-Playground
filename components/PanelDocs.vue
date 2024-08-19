@@ -50,9 +50,18 @@ const breadcrumbs = computed(() => {
 })
 const ui = useUiState()
 
-const sourceUrl = computed(() => page.value?._file
-  ? `https://github.com/andy820621/Nuxt-Playground/edit/main/content/${page.value._file}`
-  : undefined)
+const sourceUrl = computed(() =>
+  page.value?._file
+    ? `https://github.com/nuxt/learn.nuxt.com/edit/main/content/${page.value._file}`
+    : undefined,
+)
+const docsEl = ref<HTMLElement | null>(null)
+const router = useRouter()
+router.beforeEach(() => {
+  docsEl.value?.scrollTo({
+    top: 0,
+  })
+})
 </script>
 
 <template>
@@ -80,7 +89,7 @@ const sourceUrl = computed(() => page.value?._file
 
     <!-- 教學內容區域 -->
     <div relative h-full of-hidden>
-      <article class="max-w-none prose" h-full of-auto p6>
+      <article ref="docsEl" class="max-w-none prose" h-full of-auto p6>
         <ContentDoc />
 
         <!-- 上一節教學和下一節教學導航卡片 -->

@@ -92,6 +92,9 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
     ? JSON.parse(stripJsonComments(tsconfigRaw, { trailingCommas: true }))
     : {}
 
+  if (!tsconfigRaw)
+    return
+
   // Resolve .nuxt/tsconfig.json paths from `./.nuxt` to `./`
   function resolvePath(path: string) {
     if (path.startsWith('./'))
