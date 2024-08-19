@@ -14,11 +14,11 @@ importers:
   .:
     dependencies:
       '@shikijs/core':
-        specifier: 1.5.2
-        version: 1.5.2
+        specifier: 1.10.0
+        version: 1.10.0
       '@shikijs/monaco':
-        specifier: 1.5.2
-        version: 1.5.2
+        specifier: 1.10.0
+        version: 1.10.0
       '@volar/monaco':
         specifier: 2.4.0-alpha.12
         version: 2.4.0-alpha.12
@@ -43,21 +43,9 @@ importers:
       monaco-editor:
         specifier: ^0.50.0
         version: 0.50.0
-      monaco-editor-textmate:
-        specifier: ^4.0.0
-        version: 4.0.0(monaco-editor@0.50.0)(monaco-textmate@3.0.1(onigasm@2.2.5))
-      monaco-textmate:
-        specifier: ^3.0.1
-        version: 3.0.1(onigasm@2.2.5)
-      onigasm:
-        specifier: ^2.2.5
-        version: 2.2.5
-      pathe:
-        specifier: ^1.1.2
-        version: 1.1.2
       shiki:
-        specifier: 1.5.2
-        version: 1.5.2
+        specifier: 1.10.0
+        version: 1.10.0
       splitpanes:
         specifier: ^3.1.5
         version: 3.1.5(patch_hash=2i7em5dihsnqvz7jmd523rym6m)
@@ -143,6 +131,9 @@ importers:
       nuxt:
         specifier: ^3.12.4
         version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.4.0)(eslint@9.9.0(jiti@1.21.6))(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(vite@5.4.1(@types/node@22.4.0)(terser@5.31.6))(vue-tsc@2.0.29(typescript@5.5.4))
+      pathe:
+        specifier: ^1.1.2
+        version: 1.1.2
       pnpm-patch-i:
         specifier: ^0.4.1
         version: 0.4.1
@@ -1451,14 +1442,14 @@ packages:
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
+  '@shikijs/core@1.10.0':
+    resolution: {integrity: sha512-BZcr6FCmPfP6TXaekvujZcnkFmJHZ/Yglu97r/9VjzVndQA56/F4WjUKtJRQUnK59Wi7p/UTAOekMfCJv7jnYg==}
+
   '@shikijs/core@1.14.1':
     resolution: {integrity: sha512-KyHIIpKNaT20FtFPFjCQB5WVSTpLR/n+jQXhWHWVUMm9MaOaG9BGOG0MSyt7yA4+Lm+4c9rTc03tt3nYzeYSfw==}
 
-  '@shikijs/core@1.5.2':
-    resolution: {integrity: sha512-wSAOgaz48GmhILFElMCeQypSZmj6Ru6DttOOtl3KNkdJ17ApQuGNCfzpk4cClasVrnIu45++2DBwG4LNMQAfaA==}
-
-  '@shikijs/monaco@1.5.2':
-    resolution: {integrity: sha512-k2wxI31/qFCA2YRvx7Vn5Au/8w564F9mKk07abToktBZtm/fJ2kN5WDPqh1BnAIEwdPSQVUALlHIBOCtYm/SaQ==}
+  '@shikijs/monaco@1.10.0':
+    resolution: {integrity: sha512-fEnfzRDNr12fHqCxv6sjYyK8hKQPf3w1j9XHXZihuEvEXIIPM2ZdBjZg1+xN0LW1Bcmu1im84C/tgekQW1bFeQ==}
 
   '@shikijs/transformers@1.14.1':
     resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
@@ -3129,9 +3120,6 @@ packages:
   fast-npm-meta@0.1.1:
     resolution: {integrity: sha512-uS9DjGncI/9XZ6HJFrci0WzSi++N8Jskbb2uB7+9SQlrgA3VaLhXhV9Gl5HwIGESHkayYYZFGnVNhJwRDKCWIA==}
 
-  fast-plist@0.1.3:
-    resolution: {integrity: sha512-d9cEfo/WcOezgPLAC/8t8wGb6YOD6JTCPMw2QcG2nAdFmyY+9rTUizCTaGjIZAloWENTEUMAPpkUAIJJJ0i96A==}
-
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -4127,22 +4115,11 @@ packages:
   monaco-editor-core@0.50.0:
     resolution: {integrity: sha512-XKdublTat9qDKwJhMbm6nnTUKA75MU7jWVooZeXcZKP0/y2jscNWQ9FpCiRtWk33Teemihx155WQ7o7xgf89eA==}
 
-  monaco-editor-textmate@4.0.0:
-    resolution: {integrity: sha512-Clwup5LJzVfwURQrS+odSEC5/hZBEG36pQnvBKt4OtBndF8r2xLeXUZcK/AqEBK2u0Npy7frFp9hG7m66Ol9hA==}
-    peerDependencies:
-      monaco-editor: 0.x.x
-      monaco-textmate: ^3.0.0
-
   monaco-editor@0.50.0:
     resolution: {integrity: sha512-8CclLCmrRRh+sul7C08BmPBP3P8wVWfBHomsTcndxg5NRCEPfu/mc2AGU8k37ajjDVXcXFc12ORAMUkmk+lkFA==}
 
   monaco-languageserver-types@0.3.4:
     resolution: {integrity: sha512-d58sP5yNhjs8uG1ESXs0hFnuX2YfdMhiGeWhdgTUZyG9aaWgyI4dDwrK1khf1mPF2u9Sljv42sfYqPFZnqYMYg==}
-
-  monaco-textmate@3.0.1:
-    resolution: {integrity: sha512-ZxxY3OsqUczYP1sGqo97tu+CJmMBwuSW+dL0WEBdDhOZ5G1zntw72hvBc68ZQAirosWvbDKgN1dL5k173QtFww==}
-    peerDependencies:
-      onigasm: ^2.0.0
 
   monaco-types@0.1.0:
     resolution: {integrity: sha512-aWK7SN9hAqNYi0WosPoMjenMeXJjwCxDibOqWffyQ/qXdzB/86xshGQobRferfmNz7BSNQ8GB0MD0oby9/5fTQ==}
@@ -4333,9 +4310,6 @@ packages:
   onetime@6.0.0:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
-
-  onigasm@2.2.5:
-    resolution: {integrity: sha512-F+th54mPc0l1lp1ZcFMyL/jTs2Tlq4SqIHKIXGZOR/VkHkF9A7Fr5rRr5+ZG/lWeRsyrClLYRq7s/yFQ/XhWCA==}
 
   open@10.1.0:
     resolution: {integrity: sha512-mnkeQ1qP5Ue2wd+aivTD3NHd/lZ96Lu0jgf0pwktLPtx6cTZiH7tyeGRRHs0zX0rbrahXPnXlUnbeXyaBBuIaw==}
@@ -5004,11 +4978,11 @@ packages:
   shell-quote@1.8.1:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
 
+  shiki@1.10.0:
+    resolution: {integrity: sha512-YD2sXQ+TMD/F9BimV9Jn0wj35pqOvywvOG/3PB6hGHyGKlM7TJ9tyJ02jOb2kF8F0HfJwKNYrh3sW7jEcuRlXA==}
+
   shiki@1.14.1:
     resolution: {integrity: sha512-FujAN40NEejeXdzPt+3sZ3F2dx1U24BY2XTY01+MG8mbxCiA2XukXdcbyMyLAHJ/1AUUnQd1tZlvIjefWWEJeA==}
-
-  shiki@1.5.2:
-    resolution: {integrity: sha512-fpPbuSaatinmdGijE7VYUD3hxLozR3ZZ+iAx8Iy2X6REmJGyF5hQl94SgmiUNTospq346nXUVZx0035dyGvIVw==}
 
   signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
@@ -7198,7 +7172,7 @@ snapshots:
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       scule: 1.3.0
-      shiki: 1.14.1
+      shiki: 1.10.0
       ufo: 1.5.4
       unified: 11.0.5
       unist-builder: 4.0.0
@@ -7532,15 +7506,15 @@ snapshots:
 
   '@sec-ant/readable-stream@0.4.1': {}
 
+  '@shikijs/core@1.10.0': {}
+
   '@shikijs/core@1.14.1':
     dependencies:
       '@types/hast': 3.0.4
 
-  '@shikijs/core@1.5.2': {}
-
-  '@shikijs/monaco@1.5.2':
+  '@shikijs/monaco@1.10.0':
     dependencies:
-      '@shikijs/core': 1.5.2
+      '@shikijs/core': 1.10.0
 
   '@shikijs/transformers@1.14.1':
     dependencies:
@@ -9765,8 +9739,6 @@ snapshots:
 
   fast-npm-meta@0.1.1: {}
 
-  fast-plist@0.1.3: {}
-
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -10987,11 +10959,6 @@ snapshots:
 
   monaco-editor-core@0.50.0: {}
 
-  monaco-editor-textmate@4.0.0(monaco-editor@0.50.0)(monaco-textmate@3.0.1(onigasm@2.2.5)):
-    dependencies:
-      monaco-editor: 0.50.0
-      monaco-textmate: 3.0.1(onigasm@2.2.5)
-
   monaco-editor@0.50.0: {}
 
   monaco-languageserver-types@0.3.4:
@@ -10999,11 +10966,6 @@ snapshots:
       monaco-types: 0.1.0
       vscode-languageserver-protocol: 3.17.5
       vscode-uri: 3.0.8
-
-  monaco-textmate@3.0.1(onigasm@2.2.5):
-    dependencies:
-      fast-plist: 0.1.3
-      onigasm: 2.2.5
 
   monaco-types@0.1.0: {}
 
@@ -11457,10 +11419,6 @@ snapshots:
   onetime@6.0.0:
     dependencies:
       mimic-fn: 4.0.0
-
-  onigasm@2.2.5:
-    dependencies:
-      lru-cache: 5.1.1
 
   open@10.1.0:
     dependencies:
@@ -12262,14 +12220,14 @@ snapshots:
 
   shell-quote@1.8.1: {}
 
+  shiki@1.10.0:
+    dependencies:
+      '@shikijs/core': 1.10.0
+
   shiki@1.14.1:
     dependencies:
       '@shikijs/core': 1.14.1
       '@types/hast': 3.0.4
-
-  shiki@1.5.2:
-    dependencies:
-      '@shikijs/core': 1.5.2
 
   signal-exit@3.0.7: {}
 
