@@ -130,24 +130,24 @@ export async function reloadLanguageTools(ctx: PlaygroundMonacoContext) {
     ...Array.from(ctx.files.values()).map(file => Uri.parse(`file:///${file.filepath}`)),
     ...extraFiles,
   ]
-  const { dispose: disposeMarkers } = volar.editor.activateMarkers( // 啟用標記
+  const { dispose: disposeMarkers } = volar.activateMarkers( // 啟用標記
     worker,
     languageId,
     'vue',
     getSyncUris,
-    editor,
+    editor as typeof import('monaco-editor').editor,
   )
-  const { dispose: disposeAutoInsertion } = volar.editor.activateAutoInsertion( // 啟用自動插入
+  const { dispose: disposeAutoInsertion } = volar.activateAutoInsertion( // 啟用自動插入
     worker,
     languageId,
     getSyncUris,
-    editor,
+    editor as typeof import('monaco-editor').editor,
   )
-  const { dispose: disposeProvides } = await volar.languages.registerProvides( // 註冊提供者
+  const { dispose: disposeProvides } = await volar.registerProviders( // 註冊提供者
     worker,
     languageId,
     getSyncUris,
-    languages,
+    languages as unknown as typeof import('monaco-editor').languages,
   )
 
   disposeVue = () => {
