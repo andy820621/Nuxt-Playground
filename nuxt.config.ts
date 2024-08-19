@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     'floating-vue/nuxt',
     '@nuxtjs/seo',
     '@nuxt/icon',
+    '@nuxt/eslint',
 
     // local
     '~/modules/template-loader',
@@ -31,6 +32,11 @@ export default defineNuxtConfig({
   site: {
     url: 'https://nuxt-tutorial-playground.netlify.app/',
     name: 'Nuxt Tutorial Playground',
+  },
+  eslint: {
+    config: {
+      standalone: false,
+    },
   },
   ogImage: {
     debug: true,
