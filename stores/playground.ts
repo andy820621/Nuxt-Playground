@@ -145,7 +145,7 @@ export const usePlaygroundStore = defineStore('playground', () => {
 
     status.value = 'install'
 
-    const installExitCode = await spawn(wc, INSTALL_MANAGER, ['install']) // 執行 install
+    const installExitCode = await spawn(wc, 'pnpm', ['install', '--prefer-offline']) // 執行 install
     if (signal.aborted)
       return
 
