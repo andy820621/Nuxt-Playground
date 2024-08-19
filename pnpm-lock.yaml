@@ -14,11 +14,11 @@ importers:
   .:
     dependencies:
       '@shikijs/core':
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 1.2.4
+        version: 1.2.4
       '@shikijs/monaco':
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 1.2.4
+        version: 1.2.4
       '@volar/monaco':
         specifier: 1.11.1
         version: 1.11.1
@@ -56,8 +56,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       shiki:
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 1.2.4
+        version: 1.2.4
       splitpanes:
         specifier: ^3.1.5
         version: 3.1.5(patch_hash=2i7em5dihsnqvz7jmd523rym6m)
@@ -65,8 +65,8 @@ importers:
         specifier: 5.0.1
         version: 5.0.1
       theme-vitesse:
-        specifier: 0.7.7
-        version: 0.7.7
+        specifier: 0.7.8
+        version: 0.7.8
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -1439,11 +1439,11 @@ packages:
   '@shikijs/core@1.14.1':
     resolution: {integrity: sha512-KyHIIpKNaT20FtFPFjCQB5WVSTpLR/n+jQXhWHWVUMm9MaOaG9BGOG0MSyt7yA4+Lm+4c9rTc03tt3nYzeYSfw==}
 
-  '@shikijs/core@1.2.0':
-    resolution: {integrity: sha512-OlFvx+nyr5C8zpcMBnSGir0YPD6K11uYhouqhNmm1qLiis4GA7SsGtu07r9gKS9omks8RtQqHrJL4S+lqWK01A==}
+  '@shikijs/core@1.2.4':
+    resolution: {integrity: sha512-ClaUWpt8oTzjcF0MM1P81AeWyzc1sNSJlAjMG80CbwqbFqXSNz+NpQVUC0icobt3sZn43Sn27M4pHD/Jmp3zHw==}
 
-  '@shikijs/monaco@1.2.0':
-    resolution: {integrity: sha512-PKHtdPvg2w62X8BbOVW+XCXy40/rfFEGWRPbARduCSmfZyVPfK/mMqkLfxcvSIPzd/B0EZ09D2pojWEhkTkObg==}
+  '@shikijs/monaco@1.2.4':
+    resolution: {integrity: sha512-uK0xYFkGZjdh2W/8eyvLoaxWYKVMuENErDYdhe934NlepSwFcOD5NsL21sdexouN6FEEzWWaZHRD1oDkKj7Rzw==}
 
   '@shikijs/transformers@1.14.1':
     resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
@@ -4977,8 +4977,8 @@ packages:
   shiki@1.14.1:
     resolution: {integrity: sha512-FujAN40NEejeXdzPt+3sZ3F2dx1U24BY2XTY01+MG8mbxCiA2XukXdcbyMyLAHJ/1AUUnQd1tZlvIjefWWEJeA==}
 
-  shiki@1.2.0:
-    resolution: {integrity: sha512-xLhiTMOIUXCv5DqJ4I70GgQCtdlzsTqFLZWcMHHG3TAieBUbvEGthdrlPDlX4mL/Wszx9C6rEcxU6kMlg4YlxA==}
+  shiki@1.2.4:
+    resolution: {integrity: sha512-Q9n9jKiOjJCRPztA9POn3/uZXNySHDNKAsPNpmtHDcFyi6ZQhx5vQKZW3Nhrwn8TWW3RudSRk66zqY603EZDeg==}
 
   signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
@@ -5265,8 +5265,8 @@ packages:
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
 
-  theme-vitesse@0.7.7:
-    resolution: {integrity: sha512-wxGbX0iEo2sxFotZOxiNj7oihFFvU1jS2xpyKXp4NBiqibwGyMDLlBRlMXI8igJ08x6eqi+EIMd9oU1nG71z4Q==}
+  theme-vitesse@0.7.8:
+    resolution: {integrity: sha512-RS7XkU3i67piJvfYLWo52r/5aL+l2tCMifBPvmdD8woGHW2Jye9Trd0vwcjXBpWbdQGpyiPyZxx0yPlXCqAQAw==}
     engines: {vscode: ^1.43.0}
 
   tiny-inflate@1.0.3:
@@ -7494,11 +7494,11 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  '@shikijs/core@1.2.0': {}
+  '@shikijs/core@1.2.4': {}
 
-  '@shikijs/monaco@1.2.0':
+  '@shikijs/monaco@1.2.4':
     dependencies:
-      '@shikijs/core': 1.2.0
+      '@shikijs/core': 1.2.4
 
   '@shikijs/transformers@1.14.1':
     dependencies:
@@ -12196,9 +12196,9 @@ snapshots:
       '@shikijs/core': 1.14.1
       '@types/hast': 3.0.4
 
-  shiki@1.2.0:
+  shiki@1.2.4:
     dependencies:
-      '@shikijs/core': 1.2.0
+      '@shikijs/core': 1.2.4
 
   signal-exit@3.0.7: {}
 
@@ -12502,7 +12502,7 @@ snapshots:
 
   text-table@0.2.0: {}
 
-  theme-vitesse@0.7.7: {}
+  theme-vitesse@0.7.8: {}
 
   tiny-inflate@1.0.3: {}
 

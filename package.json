@@ -14,8 +14,8 @@
     "format": "eslint . --fix"
   },
   "dependencies": {
-    "@shikijs/core": "1.2.0",
-    "@shikijs/monaco": "1.2.0",
+    "@shikijs/core": "1.2.4",
+    "@shikijs/monaco": "1.2.4",
     "@volar/monaco": "1.11.1",
     "@vue/language-service": "1.8.27",
     "@webcontainer/api": "1.2.0",
@@ -28,10 +28,10 @@
     "monaco-textmate": "^3.0.1",
     "onigasm": "^2.2.5",
     "pathe": "^1.1.2",
-    "shiki": "1.2.0",
+    "shiki": "1.2.4",
     "splitpanes": "^3.1.5",
     "strip-json-comments": "5.0.1",
-    "theme-vitesse": "0.7.7",
+    "theme-vitesse": "0.7.8",
     "typescript": "^5.5.4",
     "unified": "^11.0.5",
     "vue": "latest"
