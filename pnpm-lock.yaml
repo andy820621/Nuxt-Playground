@@ -14,11 +14,11 @@ importers:
   .:
     dependencies:
       '@shikijs/core':
-        specifier: 1.2.4
-        version: 1.2.4
+        specifier: 1.5.2
+        version: 1.5.2
       '@shikijs/monaco':
-        specifier: 1.2.4
-        version: 1.2.4
+        specifier: 1.5.2
+        version: 1.5.2
       '@volar/monaco':
         specifier: 1.11.1
         version: 1.11.1
@@ -41,11 +41,11 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2(@nuxt/kit@3.12.4(magicast@0.3.4)(rollup@4.21.0))(vue@3.4.38(typescript@5.5.4))
       monaco-editor:
-        specifier: 0.47.0
-        version: 0.47.0
+        specifier: 0.48.0
+        version: 0.48.0
       monaco-editor-textmate:
         specifier: ^4.0.0
-        version: 4.0.0(monaco-editor@0.47.0)(monaco-textmate@3.0.1(onigasm@2.2.5))
+        version: 4.0.0(monaco-editor@0.48.0)(monaco-textmate@3.0.1(onigasm@2.2.5))
       monaco-textmate:
         specifier: ^3.0.1
         version: 3.0.1(onigasm@2.2.5)
@@ -56,8 +56,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       shiki:
-        specifier: 1.2.4
-        version: 1.2.4
+        specifier: 1.5.2
+        version: 1.5.2
       splitpanes:
         specifier: ^3.1.5
         version: 3.1.5(patch_hash=2i7em5dihsnqvz7jmd523rym6m)
@@ -65,11 +65,8 @@ importers:
         specifier: 5.0.1
         version: 5.0.1
       theme-vitesse:
-        specifier: 0.7.8
-        version: 0.7.8
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
+        specifier: 0.8.0
+        version: 0.8.0
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -138,8 +135,8 @@ importers:
         specifier: ^3.10.1
         version: 3.10.1
       monaco-editor-core:
-        specifier: 0.47.0
-        version: 0.47.0
+        specifier: 0.48.0
+        version: 0.48.0
       nuxt:
         specifier: ^3.12.4
         version: 3.12.4(@parcel/watcher@2.4.1)(@types/node@22.4.0)(eslint@9.9.0(jiti@1.21.6))(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(vite@5.4.1(@types/node@22.4.0)(terser@5.31.6))(vue-tsc@2.0.29(typescript@5.5.4))
@@ -149,6 +146,9 @@ importers:
       remark-external-links:
         specifier: ^9.0.1
         version: 9.0.1
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
       unocss:
         specifier: ^0.61.7
         version: 0.61.9(@unocss/webpack@0.61.9(rollup@4.21.0)(webpack@5.93.0(esbuild@0.23.1)))(postcss@8.4.41)(rollup@4.21.0)(vite@5.4.1(@types/node@22.4.0)(terser@5.31.6))
@@ -1439,11 +1439,11 @@ packages:
   '@shikijs/core@1.14.1':
     resolution: {integrity: sha512-KyHIIpKNaT20FtFPFjCQB5WVSTpLR/n+jQXhWHWVUMm9MaOaG9BGOG0MSyt7yA4+Lm+4c9rTc03tt3nYzeYSfw==}
 
-  '@shikijs/core@1.2.4':
-    resolution: {integrity: sha512-ClaUWpt8oTzjcF0MM1P81AeWyzc1sNSJlAjMG80CbwqbFqXSNz+NpQVUC0icobt3sZn43Sn27M4pHD/Jmp3zHw==}
+  '@shikijs/core@1.5.2':
+    resolution: {integrity: sha512-wSAOgaz48GmhILFElMCeQypSZmj6Ru6DttOOtl3KNkdJ17ApQuGNCfzpk4cClasVrnIu45++2DBwG4LNMQAfaA==}
 
-  '@shikijs/monaco@1.2.4':
-    resolution: {integrity: sha512-uK0xYFkGZjdh2W/8eyvLoaxWYKVMuENErDYdhe934NlepSwFcOD5NsL21sdexouN6FEEzWWaZHRD1oDkKj7Rzw==}
+  '@shikijs/monaco@1.5.2':
+    resolution: {integrity: sha512-k2wxI31/qFCA2YRvx7Vn5Au/8w564F9mKk07abToktBZtm/fJ2kN5WDPqh1BnAIEwdPSQVUALlHIBOCtYm/SaQ==}
 
   '@shikijs/transformers@1.14.1':
     resolution: {integrity: sha512-JJqL8QBVCJh3L61jqqEXgFq1cTycwjcGj7aSmqOEsbxnETM9hRlaB74QuXvY/fVJNjbNt8nvWo0VwAXKvMSLRg==}
@@ -4097,8 +4097,8 @@ packages:
   mlly@1.7.1:
     resolution: {integrity: sha512-rrVRZRELyQzrIUAVMHxP97kv+G786pHmOKzuFII8zDYahFBS7qnHh2AlYSl1GAHhaMPCz6/oHjVMcfFYgFYHgA==}
 
-  monaco-editor-core@0.47.0:
-    resolution: {integrity: sha512-xho7dsmSYOIek6bkMKQApWHVyoOBQ1eaBIE6CIlER40paTN0r0efrig6Q9QkCacfzIuNNxNjyb1uMVoMpi8gcA==}
+  monaco-editor-core@0.48.0:
+    resolution: {integrity: sha512-HaGsPuwG+2LA9Ya2lmU7zEh8TdA33E8kh94+RplFDq+4ZjW+pa3NlxOIZGyrNrBybvicitByY3Ys9c//NLaDVQ==}
 
   monaco-editor-textmate@4.0.0:
     resolution: {integrity: sha512-Clwup5LJzVfwURQrS+odSEC5/hZBEG36pQnvBKt4OtBndF8r2xLeXUZcK/AqEBK2u0Npy7frFp9hG7m66Ol9hA==}
@@ -4106,8 +4106,8 @@ packages:
       monaco-editor: 0.x.x
       monaco-textmate: ^3.0.0
 
-  monaco-editor@0.47.0:
-    resolution: {integrity: sha512-VabVvHvQ9QmMwXu4du008ZDuyLnHs9j7ThVFsiJoXSOQk18+LF89N4ADzPbFenm0W4V2bGHnFBztIRQTgBfxzw==}
+  monaco-editor@0.48.0:
+    resolution: {integrity: sha512-goSDElNqFfw7iDHMg8WDATkfcyeLTNpBHQpO8incK6p5qZt5G/1j41X0xdGzpIkGojGXM+QiRQyLjnfDVvrpwA==}
 
   monaco-textmate@3.0.1:
     resolution: {integrity: sha512-ZxxY3OsqUczYP1sGqo97tu+CJmMBwuSW+dL0WEBdDhOZ5G1zntw72hvBc68ZQAirosWvbDKgN1dL5k173QtFww==}
@@ -4977,8 +4977,8 @@ packages:
   shiki@1.14.1:
     resolution: {integrity: sha512-FujAN40NEejeXdzPt+3sZ3F2dx1U24BY2XTY01+MG8mbxCiA2XukXdcbyMyLAHJ/1AUUnQd1tZlvIjefWWEJeA==}
 
-  shiki@1.2.4:
-    resolution: {integrity: sha512-Q9n9jKiOjJCRPztA9POn3/uZXNySHDNKAsPNpmtHDcFyi6ZQhx5vQKZW3Nhrwn8TWW3RudSRk66zqY603EZDeg==}
+  shiki@1.5.2:
+    resolution: {integrity: sha512-fpPbuSaatinmdGijE7VYUD3hxLozR3ZZ+iAx8Iy2X6REmJGyF5hQl94SgmiUNTospq346nXUVZx0035dyGvIVw==}
 
   signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
@@ -5265,8 +5265,8 @@ packages:
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
 
-  theme-vitesse@0.7.8:
-    resolution: {integrity: sha512-RS7XkU3i67piJvfYLWo52r/5aL+l2tCMifBPvmdD8woGHW2Jye9Trd0vwcjXBpWbdQGpyiPyZxx0yPlXCqAQAw==}
+  theme-vitesse@0.8.0:
+    resolution: {integrity: sha512-ziTCsFi5b8DpgcF2Mntaxq2MGtyj8Uxa6+D/EJMUR6GYiAI2JCBMatSsBUeCPfg+HHuVY6sMqSu2/t9/sVDJ4A==}
     engines: {vscode: ^1.43.0}
 
   tiny-inflate@1.0.3:
@@ -7494,11 +7494,11 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
 
-  '@shikijs/core@1.2.4': {}
+  '@shikijs/core@1.5.2': {}
 
-  '@shikijs/monaco@1.2.4':
+  '@shikijs/monaco@1.5.2':
     dependencies:
-      '@shikijs/core': 1.2.4
+      '@shikijs/core': 1.5.2
 
   '@shikijs/transformers@1.14.1':
     dependencies:
@@ -10920,14 +10920,14 @@ snapshots:
       pkg-types: 1.1.3
       ufo: 1.5.4
 
-  monaco-editor-core@0.47.0: {}
+  monaco-editor-core@0.48.0: {}
 
-  monaco-editor-textmate@4.0.0(monaco-editor@0.47.0)(monaco-textmate@3.0.1(onigasm@2.2.5)):
+  monaco-editor-textmate@4.0.0(monaco-editor@0.48.0)(monaco-textmate@3.0.1(onigasm@2.2.5)):
     dependencies:
-      monaco-editor: 0.47.0
+      monaco-editor: 0.48.0
       monaco-textmate: 3.0.1(onigasm@2.2.5)
 
-  monaco-editor@0.47.0: {}
+  monaco-editor@0.48.0: {}
 
   monaco-textmate@3.0.1(onigasm@2.2.5):
     dependencies:
@@ -12196,9 +12196,9 @@ snapshots:
       '@shikijs/core': 1.14.1
       '@types/hast': 3.0.4
 
-  shiki@1.2.4:
+  shiki@1.5.2:
     dependencies:
-      '@shikijs/core': 1.2.4
+      '@shikijs/core': 1.5.2
 
   signal-exit@3.0.7: {}
 
@@ -12502,7 +12502,7 @@ snapshots:
 
   text-table@0.2.0: {}
 
-  theme-vitesse@0.7.8: {}
+  theme-vitesse@0.8.0: {}
 
   tiny-inflate@1.0.3: {}
 
