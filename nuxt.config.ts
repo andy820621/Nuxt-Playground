@@ -1,5 +1,5 @@
 import { execaSync } from 'execa'
-import { compression } from 'vite-plugin-compression2'
+// import { compression } from 'vite-plugin-compression2'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -122,7 +122,7 @@ export default defineNuxtConfig({
         'vscode-uri',
       ],
     },
-    plugins: [compression()],
+    // plugins: [compression()],
   },
   content: {
     documentDriven: true,
@@ -141,5 +141,4 @@ export default defineNuxtConfig({
       search: {},
     },
   },
-
 })
