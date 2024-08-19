@@ -91,9 +91,9 @@ export default defineNuxtModule({
 
         const transformedCode = [
           code,
-      `meta.files = ${JSON.stringify(files)}`,
-      `meta.solutions = ${JSON.stringify(solutions)}`,
-      '',
+          `meta.files = ${JSON.stringify(files)}`,
+          `meta.solutions = ${JSON.stringify(solutions)}`,
+          '',
         ].join('\n')
 
         // 假設您需要手動生成源映射

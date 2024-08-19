@@ -6,7 +6,10 @@ const ui = useUiState()
 const play = usePlaygroundStore()
 const guide = useGuideStore()
 
-const files = computed(() => Array.from(play.files.values()).filter(file => !isFileIgnored(file.filepath)))
+const files = computed(() => Array
+  .from(play.files.values())
+  .filter(file => !isFileIgnored(file.filepath, guide.ignoredFiles)),
+)
 const directory = computed(() => filesToVirtualFsTree(files.value))
 const input = ref<string>('')
 

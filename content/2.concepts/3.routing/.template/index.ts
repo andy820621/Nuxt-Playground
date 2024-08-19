@@ -5,4 +5,6 @@ export const meta: GuideMeta = {
   features: {
     fileTree: true,
   },
+  ignoredFiles: ['package.json', 'server'],
+
 }

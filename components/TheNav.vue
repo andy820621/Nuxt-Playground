@@ -10,6 +10,16 @@ const repo = 'https://github.com/andy820621/Nuxt-Playground'
 const buildTime = new Date(runtime.public.buildTime)
 const timeAgo = useTimeAgo(buildTime)
 
+function downloadCurrentGuide() {
+  if (!play.webcontainer)
+    throw new Error('No webcontainer found')
+  if (play.status !== 'ready')
+    throw new Error('Playground is not ready')
+  if (!guide.features.download)
+    throw new Error(`Download feature is disabled for guide ${guide.currentGuide}`)
+  downloadZip(play.webcontainer, guide.ignoredFiles)
+}
+
 addCommands(
   {
     id: 'download-zip',
@@ -18,7 +28,7 @@ addCommands(
       return play.status === 'ready' && guide.features.download !== false
     },
     handler: () => {
-      downloadZip(play.webcontainer!)
+      downloadCurrentGuide()
     },
     icon: 'i-ph-download-duotone',
   },
@@ -62,11 +72,11 @@ addCommands(
         <div i-ph-magnifying-glass-duotone text-2xl />
       </button>
       <button
-        v-if="play.status === 'ready' && guide.features.download !== false"
+        v-if="play.status === 'ready' && !!guide.features.download"
         rounded p2
         hover="bg-active"
         title="Download as ZIP"
-        @click="downloadZip(play.webcontainer!)"
+        @click="downloadCurrentGuide()"
       >
         <div i-ph-download-duotone text-2xl />
       </button>
