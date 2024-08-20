@@ -1,5 +1,5 @@
 import { execaSync } from 'execa'
-// import { compression } from 'vite-plugin-compression2'
+import { compression } from 'vite-plugin-compression2'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -115,14 +115,15 @@ export default defineNuxtConfig({
       include: [
         'monaco-editor/esm/vs/editor/editor.worker',
         'monaco-editor-core/esm/vs/editor/editor.worker',
-        'typescript/lib/tsserverlibrary',
         '@vue/language-service',
         '@volar/monaco/worker',
+        'shiki',
+        'typescript/lib/tsserverlibrary',
         'typescript',
         'vscode-uri',
       ],
     },
-    // plugins: [compression()],
+    plugins: [compression()],
   },
   content: {
     documentDriven: true,
