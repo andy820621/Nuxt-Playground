@@ -100,6 +100,9 @@ export default defineNuxtConfig({
       },
     },
   },
+  build: {
+    transpile: ['shiki'],
+  },
   vite: {
     build: {
       minify: 'esbuild',
